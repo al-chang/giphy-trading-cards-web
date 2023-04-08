@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
+import { useUserContext } from "../hooks/useUser";
+import { getUsers } from "../services/userService";
 
 const Home = () => {
-  const [count, setCount] = useState(0);
+  const { user } = useUserContext();
 
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Click</button>
-    </div>
-  );
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const users = await getUsers();
+      console.log(users);
+    };
+    fetchUsers();
+  }, []);
+
+  return <div>{user ? user.email : "Not logged in"}</div>;
 };
 
 export default Home;
