@@ -1,9 +1,7 @@
-import { SignUpForm } from "../pages/SignUp";
 import { User } from "../types";
 import api from "./api";
 
-const BASE_URL = "http://localhost:5001/api";
-const AUTH_API = `${BASE_URL}/auth`;
+const AUTH_API = `/auth`;
 
 export type LoginFields = {
   email: string;

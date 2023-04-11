@@ -6,6 +6,7 @@ import { UserProvider } from "./hooks/useUser";
 import NagivationBar from "./components/NavigationBar";
 import RequireAuth from "./components/RequireAuth";
 import { Role } from "./types";
+import Profile from "./pages/Profile";
 
 function App() {
   const permissionLevels = {
@@ -26,7 +27,7 @@ function App() {
             path="/profile"
             element={
               <RequireAuth allowedRoles={permissionLevels.allRoles}>
-                Profile
+                <Profile />
               </RequireAuth>
             }
           />
