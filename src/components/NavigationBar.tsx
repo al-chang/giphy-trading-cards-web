@@ -15,18 +15,27 @@ const NagivationBar = () => {
           navigate("/");
         }}
       >
-        Sign out
+        Log out
       </button>
     );
   } else {
     return (
-      <button
-        onClick={() => {
-          navigate("/log-in");
-        }}
-      >
-        Log In
-      </button>
+      <>
+        <button
+          onClick={() => {
+            navigate("/log-in");
+          }}
+        >
+          Log In
+        </button>
+        <button
+          onClick={() => {
+            navigate("/sign-up");
+          }}
+        >
+          Sign Up
+        </button>
+      </>
     );
   }
 };
