@@ -11,6 +11,7 @@ import { profile } from "../services/authService";
 type UserContextType = {
   user: User | null;
   setUserData: (value: React.SetStateAction<User | null>) => void;
+  loading: boolean;
 };
 
 const UserContext = createContext<UserContextType>(null!);
@@ -21,16 +22,22 @@ export const useUserContext = () => {
 
 export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUserData] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const retrievedProfile = await profile();
-      setUserData(retrievedProfile);
+      const userProfile = await profile();
+      setUserData(userProfile);
+      setLoading(false);
     };
-    fetchUser();
+    fetchUser().catch((_err) => {
+      setUserData(null);
+      setLoading(false);
+    });
   }, []);
+
   return (
-    <UserContext.Provider value={{ user, setUserData }}>
+    <UserContext.Provider value={{ user, setUserData, loading }}>
       {children}
     </UserContext.Provider>
   );
