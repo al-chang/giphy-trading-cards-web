@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserContext } from "../hooks/useUser";
-import { Role } from "../types";
+import { useUserContext } from "../../hooks/useUser";
+import { Role } from "../../types";
 
 type ProtectedRouteProps = {
   allowedRoles: Role[];

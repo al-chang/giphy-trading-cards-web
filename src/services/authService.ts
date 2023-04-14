@@ -1,3 +1,4 @@
+import { SignUpForm } from "../pages/SignUp/SignUp";
 import { User } from "../types";
 import api from "./api";
 
@@ -8,7 +9,7 @@ export type LoginFields = {
   password: string;
 };
 
-export const signup = (user: LoginFields) =>
+export const signup = (user: Omit<SignUpForm, "confirmPassword">) =>
   api.post<User>(`${AUTH_API}/signup`, user).then((response) => response.data);
 
 export const login = (user: LoginFields) =>
