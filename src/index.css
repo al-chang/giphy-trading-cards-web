@@ -1,0 +1,14 @@
+:root {
+  --background: 18, 18, 18;
+  --primary-font: 255, 255, 255;
+}
+
+html {
+  background-color: rgb(var(--background));
+  font-family: Roboto, sans-serif;
+  color: rgb(var(--primary-font));
+}
+
+body {
+  margin: 0 10%;
+}

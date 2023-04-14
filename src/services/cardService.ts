@@ -1,10 +1,13 @@
+import { TCard } from "../pages/BrowseCards/BrowseCards";
+import { TPack } from "../pages/BrowsePacks/BrowsePacks";
+import { Paginated } from "../types";
 import api from "./api";
 
 const CARD_URL = "/cards";
 const PACK_URL = "/packs";
 
-export const getCurrentUserCards = async () => {
-  const { data } = await api.get(CARD_URL);
+export const getCards = async () => {
+  const { data } = await api.get<Paginated<TCard>>(CARD_URL);
   return data;
 };
 
@@ -19,7 +22,7 @@ export const openPack = async (packId: string) => {
 };
 
 export const getPacks = async () => {
-  const { data } = await api.get(`${PACK_URL}`);
+  const { data } = await api.get<TPack[]>(`${PACK_URL}`);
   return data;
 };
 

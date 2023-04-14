@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginFields, login, profile } from "../services/authService";
-import { useUserContext } from "../hooks/useUser";
+import { LoginFields, login, profile } from "../../services/authService";
+import { useUserContext } from "../../hooks/useUser";
 
 const LogIn = () => {
   const [loginUser, setLoginUser] = useState<LoginFields>({

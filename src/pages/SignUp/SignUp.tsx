@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { signup } from "../services/authService";
-import { useUserContext } from "../hooks/useUser";
+import { signup } from "../../services/authService";
+import { useUserContext } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
 export type SignUpForm = {
   email: string;
+  username: string;
   password: string;
   confirmPassword: string;
 };
@@ -12,6 +13,7 @@ export type SignUpForm = {
 const SignUp = () => {
   const [newUser, setNewUser] = useState<SignUpForm>({
     email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -29,6 +31,7 @@ const SignUp = () => {
     try {
       const user = await signup({
         email: newUser.email,
+        username: newUser.username,
         password: newUser.password,
       });
       setUserData(user);
@@ -51,6 +54,10 @@ const SignUp = () => {
         <input
           type="email"
           onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+        />
+        <input
+          type="text"
+          onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
         />
         <input
           type="password"
