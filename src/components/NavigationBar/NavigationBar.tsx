@@ -8,7 +8,11 @@ const NagivationBar = () => {
   const { user, setUserData } = useUserContext();
   const navigate = useNavigate();
 
-  const links = [{ name: "Test", path: "/" }];
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Cards", path: "/cards" },
+    { name: "Packs", path: "/packs" },
+  ];
 
   const buttons = user ? (
     <button

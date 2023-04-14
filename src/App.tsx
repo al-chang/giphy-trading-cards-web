@@ -9,6 +9,7 @@ import { Role } from "./types";
 import Profile from "./pages/Profile/Profile";
 import BrowseCards from "./pages/BrowseCards/BrowseCards";
 import { useEffect } from "react";
+import BrowsePacks from "./pages/BrowsePacks/BrowsePacks";
 
 function App() {
   const permissionLevels = {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/cards" element={<BrowseCards />} />
+          <Route path="/packs" element={<BrowsePacks />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
