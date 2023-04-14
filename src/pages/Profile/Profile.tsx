@@ -1,8 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../hooks/useUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getUserProfile } from "../../services/userService";
+import { Role } from "../../types";
+
+export type Profile = {
+  id: string;
+  email?: string;
+  username: string;
+  role: Role;
+  coins: number;
+  createdAt: string;
+  updatedAt: string;
+};
 
 const Profile = () => {
+  const [profile, setProfile] = useState<Profile | null>(null);
+
   const { user, loading } = useUserContext();
   let { id } = useParams();
   const navigate = useNavigate();
@@ -15,17 +29,33 @@ const Profile = () => {
     }
   }, [id, user, loading, navigate]);
 
+  // Get the correct user data based on URL params
+  useEffect(() => {
+    const idToSearch = id || user?.id;
+    if (!idToSearch) {
+      return;
+    }
+    const getUserData = async () => {
+      const profile = await getUserProfile(idToSearch);
+      setProfile(profile);
+    };
+    getUserData();
+  }, [id, user]);
+
   return (
     <div>
       <h1>Profile</h1>
       <p>
-        <strong>Email:</strong> {user?.email}
+        <strong>Email:</strong> {profile?.email}
       </p>
       <p>
-        <strong>Username:</strong> {user?.username}
+        <strong>Username:</strong> {profile?.username}
       </p>
       <p>
-        <strong>Role:</strong> {user?.role}
+        <strong>Role:</strong> {profile?.role}
+      </p>
+      <p>
+        <strong>Coins:</strong> {profile?.coins}
       </p>
     </div>
   );

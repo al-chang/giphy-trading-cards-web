@@ -42,7 +42,7 @@ const NagivationBar = () => {
 
   return (
     <nav id="NavBar__container">
-      <img id="NavBar__logo" src="giphymon.png" alt="GIPHYmon logo" />
+      <img id="NavBar__logo" src="/giphymon.png" alt="GIPHYmon logo" />
       <ul id="NavBar__links_container">
         {links.map((link) => (
           <li key={link.name} className="NavBar__list_item">
