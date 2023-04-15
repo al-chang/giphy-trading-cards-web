@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../hooks/useUser";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../services/userService";
@@ -57,6 +57,9 @@ const Profile = () => {
       <p>
         <strong>Coins:</strong> {profile?.coins}
       </p>
+      <Link to={`/cards?ownerId=${profile?.id}`}>
+        View {profile?.username}'s Cards
+      </Link>
     </div>
   );
 };

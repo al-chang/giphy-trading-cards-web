@@ -28,6 +28,7 @@ const NagivationBar = () => {
   ) : (
     <>
       <button
+        className="App__Button"
         onClick={() => {
           navigate("/log-in");
         }}
@@ -35,6 +36,7 @@ const NagivationBar = () => {
         Log In
       </button>
       <button
+        className="App__Button"
         onClick={() => {
           navigate("/sign-up");
         }}

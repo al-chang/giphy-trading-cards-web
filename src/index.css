@@ -1,6 +1,13 @@
 :root {
   --background: 18, 18, 18;
   --primary-font: 255, 255, 255;
+
+  /* Breakpoints for reference */
+  --x-small: 576px;
+  --small: 768px;
+  --medium: 992px;
+  --large: 1200px;
+  --x-large: 1400px;
 }
 
 html {
@@ -11,4 +18,15 @@ html {
 
 body {
   margin: 0 10%;
+}
+
+.App__Button {
+  background-color: rgb(var(--background));
+  color: rgb(var(--primary-font));
+  border: 1px solid rgb(var(--primary-font));
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
 }

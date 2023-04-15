@@ -6,8 +6,8 @@ import api from "./api";
 const CARD_URL = "/cards";
 const PACK_URL = "/packs";
 
-export const getCards = async () => {
-  const { data } = await api.get<Paginated<TCard>>(CARD_URL);
+export const getCards = async (params: Record<string, any>) => {
+  const { data } = await api.get<Paginated<TCard>>(CARD_URL, { params });
   return data;
 };
 
