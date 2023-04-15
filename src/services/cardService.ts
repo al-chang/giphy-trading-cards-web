@@ -1,5 +1,6 @@
 import { TCard } from "../pages/BrowseCards/BrowseCards";
 import { TPack } from "../pages/BrowsePacks/BrowsePacks";
+import { TSingleCard } from "../pages/ViewCard/ViewCard";
 import { Paginated } from "../types";
 import api from "./api";
 
@@ -8,6 +9,11 @@ const PACK_URL = "/packs";
 
 export const getCards = async (params: Record<string, any>) => {
   const { data } = await api.get<Paginated<TCard>>(CARD_URL, { params });
+  return data;
+};
+
+export const getCard = async (cardId: string) => {
+  const { data } = await api.get<TSingleCard>(`${CARD_URL}/${cardId}`);
   return data;
 };
 
