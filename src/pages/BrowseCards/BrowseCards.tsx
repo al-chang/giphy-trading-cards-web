@@ -7,6 +7,7 @@ import "./index.css";
 
 export type TCard = {
   id: string;
+  name: string;
   gif: string;
   createdAt: string;
   updatedAt: string;
