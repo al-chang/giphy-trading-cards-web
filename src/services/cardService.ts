@@ -36,18 +36,15 @@ export const createPack = async ({
   name,
   price,
   tags,
-  coverGif,
 }: {
   name: string;
   price: number;
   tags: string[];
-  coverGif: string;
 }) => {
   const { data } = await api.post(`${PACK_URL}`, {
     name,
     price,
     tags,
-    coverGif,
   });
   return data;
 };

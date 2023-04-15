@@ -3,6 +3,9 @@ import { getPacks, openPack } from "../../services/cardService";
 import Pack from "../../components/Pack/Pack";
 
 import "./index.css";
+import { Link } from "react-router-dom";
+import { Role } from "../../types";
+import { useUserContext } from "../../hooks/useUser";
 
 export type TPack = {
   id: string;
@@ -16,6 +19,8 @@ export type TPack = {
 
 const BrowsePacks = () => {
   const [packs, setPacks] = useState<TPack[] | null>(null);
+
+  const { user } = useUserContext();
 
   const buyPack = async (id: string) => {
     const data = await openPack(id);
@@ -31,10 +36,13 @@ const BrowsePacks = () => {
   }, []);
 
   return (
-    <div id="BrowsePacks__container">
-      {packs?.map((pack) => (
-        <Pack key={pack.id} data={pack} onClick={buyPack} />
-      ))}
+    <div>
+      {user?.role === Role.ADMIN && <Link to="/packs/create">+</Link>}
+      <div id="BrowsePacks__container">
+        {packs?.map((pack) => (
+          <Pack key={pack.id} data={pack} onClick={buyPack} />
+        ))}
+      </div>
     </div>
   );
 };
