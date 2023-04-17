@@ -1,0 +1,19 @@
+#ViewCard__container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+#ViewCard__gif {
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media screen and (min-width: 768px) {
+  #ViewCard__container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
