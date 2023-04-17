@@ -25,8 +25,8 @@ export const getCoins = async () => {
 };
 
 export const collectCoins = async () => {
-  const coins = await api.post<number>(COINS_URL);
-  return coins.data;
+  const coins = await api.post<{ coins: number }>(`${COINS_URL}/daily`);
+  return coins.data.coins;
 };
 
 export const addCoins = async (coins: number, userId: string) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collectCoins, getCoins } from "../../services/userService";
 
 import "./index.css";
@@ -8,22 +8,25 @@ import "./index.css";
 
 const Coins = () => {
   const [canCollect, setCanCollect] = useState(false);
-  const [coinsCollected, setCoinsCollected] = useState<number | null>(null);
+  const coinsCollectedRef = useRef(0);
 
   const slotOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const onCollect = async () => {
     const coins = await collectCoins();
     setCanCollect(false);
-    setCoinsCollected(coins);
+    coinsCollectedRef.current = coins;
   };
 
-  function shuffle([...arr]) {
+  function shuffle([...arr], i: number) {
     let m = arr.length;
     while (m) {
       const i = Math.floor(Math.random() * m--);
       [arr[m], arr[i]] = [arr[i], arr[m]];
     }
+    arr[arr.length - 1] = Math.floor(
+      (coinsCollectedRef.current / Math.pow(10, i)) % 10
+    );
     return arr;
   }
 
@@ -44,6 +47,7 @@ const Coins = () => {
 
   const init = (firstInit: boolean, groups: number, duration: number) => {
     const slotsContainers = document.querySelectorAll(".Coins__slot");
+    let i = 2;
 
     for (const slot of slotsContainers) {
       const slots = slot.querySelector(".Coins__slot_inner")!;
@@ -61,7 +65,8 @@ const Coins = () => {
         for (let n = 0; n < (groups > 0 ? groups : 1); n++) {
           arr.push(...slotOptions);
         }
-        pool.push(...shuffle(arr));
+        pool.push(...shuffle(arr, i));
+        i -= 1;
 
         slotsClone.addEventListener(
           "transitionstart",
@@ -127,7 +132,14 @@ const Coins = () => {
           </div>
         </div>
       </div>
-      <button onClick={() => spin()}>Spin</button>
+      <button
+        onClick={async () => {
+          await onCollect();
+          spin();
+        }}
+      >
+        Spin
+      </button>
     </>
   );
 };
