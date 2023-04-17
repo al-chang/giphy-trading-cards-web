@@ -52,7 +52,7 @@ const Coins = () => {
     for (const slot of slotsContainers) {
       const slots = slot.querySelector(".Coins__slot_inner")!;
       const slotsClone = slots.cloneNode(false) as HTMLElement;
-      const pool = ["1"];
+      const pool = ["❓"];
 
       if (firstInit) {
         (slot as HTMLElement).dataset.spinned = "0";
@@ -100,8 +100,8 @@ const Coins = () => {
       const lastCollected = new Date(res.lastCollected);
       const today = new Date();
       const canCollect =
-        lastCollected.getDate() !== today.getDate() &&
-        lastCollected.getMonth() !== today.getMonth() &&
+        lastCollected.getDate() !== today.getDate() ||
+        lastCollected.getMonth() !== today.getMonth() ||
         lastCollected.getFullYear() !== today.getFullYear();
       setCanCollect(canCollect);
     };
@@ -114,7 +114,7 @@ const Coins = () => {
   }, []);
 
   return (
-    <>
+    <div id="Coins__container">
       <div id="Coins__slots_container">
         <div className="Coins__slot">
           <div className="Coins__slot_inner">
@@ -133,6 +133,8 @@ const Coins = () => {
         </div>
       </div>
       <button
+        className="App__Button"
+        disabled={!canCollect}
         onClick={async () => {
           await onCollect();
           spin();
@@ -140,7 +142,13 @@ const Coins = () => {
       >
         Spin
       </button>
-    </>
+      {coinsCollectedRef.current > 0 && (
+        <p>
+          You've won {coinsCollectedRef.current} coins! Come back tomorrow to
+          win more!
+        </p>
+      )}
+    </div>
   );
 };
 
