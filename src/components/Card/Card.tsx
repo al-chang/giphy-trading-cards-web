@@ -3,7 +3,7 @@ import { TCard } from "../../pages/BrowseCards/BrowseCards";
 
 import "./index.css";
 
-const Card: React.FC<TCard> = ({ id, gif }) => {
+const Card: React.FC<TCard> = ({ id, name, gif }) => {
   return (
     <Link to={`/card/${id}`}>
       <div className="Card__background">
@@ -13,10 +13,7 @@ const Card: React.FC<TCard> = ({ id, gif }) => {
         >
           <div className="Card__overlay">
             <div className="Card__overlay_content">
-              <div className="Card__overlay_content_title">Title</div>
-              <div className="Card__overlay_content_description">
-                Description
-              </div>
+              <div className="Card__overlay_content_title">{name}</div>
             </div>
           </div>
         </div>

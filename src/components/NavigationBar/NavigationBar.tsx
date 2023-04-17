@@ -59,7 +59,7 @@ const NagivationBar = () => {
         ))}
       </ul>
       <div>
-        {user?.username}
+        <Link to="/profile">{user?.username}</Link>
         {buttons}
       </div>
     </nav>

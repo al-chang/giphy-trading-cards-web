@@ -54,21 +54,23 @@ const CreatePack = () => {
             }))
           }
         />
-        <label htmlFor="tags">Tags</label>
-        <input
-          id="tags"
-          onChange={(e) => setNewTag(e.target.value)}
-          value={newTag}
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              setTags((_tags) => [..._tags, newTag]);
-              setNewTag("");
-            }
-          }}
-        />
+
         <button type="submit">Create Pack</button>
         <p id="CreatePack__error">{error}</p>
       </form>
+      <label htmlFor="tags">Tags</label>
+      <input
+        id="tags"
+        onChange={(e) => setNewTag(e.target.value)}
+        value={newTag}
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            if (!newTag || !newTag.trim() || tags.includes(newTag)) return;
+            setTags((_tags) => [..._tags, newTag]);
+            setNewTag("");
+          }
+        }}
+      />
       <div className="CreatePack__tags">
         {tags.map((tag) => (
           <div key={Math.random()} className="CreatePack__tag">

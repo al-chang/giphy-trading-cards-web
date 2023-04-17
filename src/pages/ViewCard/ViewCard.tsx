@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { TCard } from "../BrowseCards/BrowseCards";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getCard } from "../../services/cardService";
 import { TPack } from "../BrowsePacks/BrowsePacks";
 
 import "./index.css";
+import { useUserContext } from "../../hooks/useUser";
 
 export type TSingleCard = TCard & {
   pack: TPack;
@@ -15,7 +16,8 @@ const ViewCard = () => {
   const [card, setCard] = useState<TSingleCard | null>(null);
 
   const navigate = useNavigate();
-  let { id } = useParams();
+  const { id } = useParams();
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (!id) {
@@ -34,16 +36,23 @@ const ViewCard = () => {
     <div id="ViewCard__container">
       <img id="ViewCard__gif" src={card?.gif} alt="selected image" />
       <div id="ViewCard__metadata">
-        <h2>Card Name</h2>
+        <h2>{card?.name}</h2>
         <ul>
           <li>
-            <strong>ID:</strong> {card?.id}
+            <strong>Owner:</strong>{" "}
+            <Link
+              to={
+                card?.ownerId === user?.id
+                  ? `/profile`
+                  : `/profile/${card?.ownerId}`
+              }
+            >
+              {card?.owner?.username}
+            </Link>
           </li>
           <li>
-            <strong>Owner:</strong> {card?.owner?.username}
-          </li>
-          <li>
-            <strong>Packed:</strong> {card?.createdAt}
+            <strong>Packed:</strong>{" "}
+            {card?.createdAt && new Date(card?.createdAt).toDateString()}
           </li>
         </ul>
       </div>
