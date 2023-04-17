@@ -5,7 +5,7 @@ import { TCard } from "../BrowseCards/BrowseCards";
 import Card from "../../components/Card/Card";
 
 const Home = () => {
-  const { user } = useUserContext();
+  const { user, loading } = useUserContext();
   const [cards, setCards] = useState<TCard[]>([]);
 
   const loadData = async () => {
@@ -14,8 +14,10 @@ const Home = () => {
   };
 
   useEffect(() => {
+    if (loading) return;
+
     loadData();
-  }, []);
+  }, [user, loading]);
 
   return (
     <div>
