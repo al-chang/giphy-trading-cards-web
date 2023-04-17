@@ -51,6 +51,9 @@ const ViewCard = () => {
             </Link>
           </li>
           <li>
+            <strong>From Pack:</strong> {card?.pack.name}
+          </li>
+          <li>
             <strong>Packed:</strong>{" "}
             {card?.createdAt && new Date(card?.createdAt).toDateString()}
           </li>
