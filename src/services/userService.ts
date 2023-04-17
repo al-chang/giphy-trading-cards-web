@@ -2,6 +2,7 @@ import { Profile } from "../pages/Profile/Profile";
 import api from "./api";
 
 const USER_URL = "/users";
+const COINS_URL = "/coins";
 
 export const getUserProfile = async (userId: string) => {
   const res = await api.get<Profile>(`${USER_URL}/${userId}`);
@@ -14,4 +15,13 @@ export const followUser = async (userId: string) => {
 
 export const unfollowUser = async (userId: string) => {
   await api.delete(`${USER_URL}/${userId}/follow`);
+};
+
+export const getCoins = async () => {
+  const res = await api.get<number>(COINS_URL);
+  return res.data;
+};
+
+export const addCoins = async (coins: number, userId: string) => {
+  await api.post(COINS_URL, { coins, userId });
 };

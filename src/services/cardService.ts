@@ -23,7 +23,7 @@ export const getUserCards = async (userId: string) => {
 };
 
 export const openPack = async (packId: string) => {
-  const { data } = await api.post(`${PACK_URL}/open/${packId}`);
+  const { data } = await api.post<TCard>(`${PACK_URL}/open/${packId}`);
   return data;
 };
 
