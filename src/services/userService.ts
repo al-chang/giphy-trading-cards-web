@@ -18,8 +18,15 @@ export const unfollowUser = async (userId: string) => {
 };
 
 export const getCoins = async () => {
-  const res = await api.get<number>(COINS_URL);
+  const res = await api.get<{ coins: number; lastCollected: string }>(
+    COINS_URL
+  );
   return res.data;
+};
+
+export const collectCoins = async () => {
+  const coins = await api.post<number>(COINS_URL);
+  return coins.data;
 };
 
 export const addCoins = async (coins: number, userId: string) => {

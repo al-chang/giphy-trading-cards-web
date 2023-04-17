@@ -35,7 +35,7 @@ const BrowsePacks = () => {
       const _packs = await getPacks();
       const _coins = await getCoins();
       setPacks(_packs);
-      setCoins(_coins);
+      setCoins(_coins.coins);
     };
 
     loadData();
@@ -46,7 +46,11 @@ const BrowsePacks = () => {
       <div id="BrowsePacks__header">
         <h1 id="BrowsePacks__title">Packs</h1>
         <div id="BrowsePacks__coins">
-          <img src="/coin.png" alt="coin" id="BrowsePacks__coin_image" />
+          <img
+            src="https://media4.giphy.com/media/TiDqYW1SQiA38RgoyY/giphy.gif?cid=ecf05e479p6ao7qowd9uyo2ezjzk3dif50b9r0myvr80zviz&rid=giphy.gif&ct=g"
+            alt="coin"
+            id="BrowsePacks__coin_image"
+          />
           {coins}
         </div>
       </div>
