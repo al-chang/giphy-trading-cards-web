@@ -1,11 +1,11 @@
-import { Profile } from "../pages/Profile/Profile";
+import { TProfile } from "../pages/Profile/Profile";
 import api from "./api";
 
 const USER_URL = "/users";
 const COINS_URL = "/coins";
 
 export const getUserProfile = async (userId: string) => {
-  const res = await api.get<Profile>(`${USER_URL}/${userId}`);
+  const res = await api.get<TProfile>(`${USER_URL}/${userId}`);
   return res.data;
 };
 

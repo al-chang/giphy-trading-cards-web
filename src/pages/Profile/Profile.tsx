@@ -5,10 +5,12 @@ import {
   getUserProfile,
   unfollowUser,
   followUser,
+  addCoins,
 } from "../../services/userService";
 import { Role } from "../../types";
+import Modal from "../../components/Modal/Modal";
 
-export type Profile = {
+export type TProfile = {
   id: string;
   email?: string;
   username: string;
@@ -22,8 +24,10 @@ export type Profile = {
 };
 
 const Profile = () => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<TProfile | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [coinsToAdd, setCoinsToAdd] = useState(0);
 
   const { user, loading } = useUserContext();
   let { id } = useParams();
@@ -69,10 +73,31 @@ const Profile = () => {
 
   return (
     <div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div>
+          <label htmlFor="coins">Coins</label>
+          <input
+            id="coins"
+            type="number"
+            value={coinsToAdd}
+            onChange={(e) => setCoinsToAdd(parseInt(e.target.value))}
+          />
+          <button
+            onClick={async () => {
+              await addCoins(coinsToAdd, profile?.id!);
+              setProfile({ ...profile!, coins: profile!.coins + coinsToAdd });
+            }}
+          >
+            Add
+          </button>
+        </div>
+      </Modal>
       <h1>Profile</h1>
-      <p>
-        <strong>Email:</strong> {profile?.email}
-      </p>
+      {(user?.role === Role.ADMIN || !id) && (
+        <p>
+          <strong>Email:</strong> {profile?.email}
+        </p>
+      )}
       <p>
         <strong>Username:</strong> {profile?.username}
       </p>
@@ -80,7 +105,8 @@ const Profile = () => {
         <strong>Role:</strong> {profile?.role}
       </p>
       <p>
-        <strong>Coins:</strong> {profile?.coins}
+        <strong>Coins:</strong> {profile?.coins}{" "}
+        <button onClick={() => setIsModalOpen(true)}>+</button>
       </p>
       <p>
         <strong>Joined:</strong>{" "}
