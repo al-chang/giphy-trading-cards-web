@@ -1,0 +1,26 @@
+#LogIn__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#LogIn__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.LogIn__input {
+  margin: 10px 0;
+}
+
+#LogIn__error {
+  color: red;
+}

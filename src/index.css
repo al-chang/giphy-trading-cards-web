@@ -38,3 +38,13 @@ body {
   border: 1px solid rgb(var(--disabled-font));
   cursor: not-allowed;
 }
+
+.App__text_input {
+  background-color: rgb(var(--background));
+  color: rgb(var(--primary-font));
+  border: 1px solid rgb(var(--primary-font));
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
