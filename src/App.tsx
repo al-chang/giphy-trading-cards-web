@@ -12,6 +12,7 @@ import ViewCard from "./pages/ViewCard/ViewCard";
 import CreatePack from "./pages/CreatePack/CreatePack";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Coins from "./pages/Coins/Coins";
+import BrowseUsers from "./pages/BrowseUsers/BrowseUsers";
 
 function App() {
   const permissionLevels = {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/log-in" element={<LogIn />} />
+          <Route path="/users" element={<BrowseUsers />} />
           <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/cards" element={<BrowseCards />} />
           <Route path="/card/:id" element={<ViewCard />} />

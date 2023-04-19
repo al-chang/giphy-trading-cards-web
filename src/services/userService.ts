@@ -1,4 +1,6 @@
+import { TUser } from "../pages/BrowseUsers/BrowseUsers";
 import { TProfile } from "../pages/Profile/Profile";
+import { Paginated } from "../types";
 import api from "./api";
 
 const USER_URL = "/users";
@@ -6,6 +8,11 @@ const COINS_URL = "/coins";
 
 export const getUserProfile = async (userId: string) => {
   const res = await api.get<TProfile>(`${USER_URL}/${userId}`);
+  return res.data;
+};
+
+export const getUsersList = async (params: Record<string, any>) => {
+  const res = await api.get<Paginated<TUser>>(USER_URL, { params });
   return res.data;
 };
 
