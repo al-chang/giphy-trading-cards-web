@@ -26,6 +26,10 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!newUser.email || !newUser.username || !newUser.password) {
+      setErrorText("Please fill out all fields");
+      return;
+    }
     if (newUser.password !== newUser.confirmPassword) {
       setErrorText("Passwords do not match");
       return;
@@ -38,8 +42,8 @@ const SignUp = () => {
       });
       setUserData(user);
       navigate("/");
-    } catch (error) {
-      setErrorText("Error signing up");
+    } catch (error: any) {
+      setErrorText(error?.response?.statusText || "Failed to signup");
     }
   };
 
