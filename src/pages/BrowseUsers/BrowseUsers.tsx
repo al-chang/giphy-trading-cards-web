@@ -70,34 +70,41 @@ export const BrowseUsers = () => {
   return (
     <div>
       <div id="BrowseUsers__filters">
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          onChange={(e) =>
-            setFilterValues({
-              ...filterValues,
-              email: e.target.value,
-            })
-          }
-          value={filterValues.email}
-        />
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          onChange={(e) =>
-            setFilterValues({
-              ...filterValues,
-              username: e.target.value,
-            })
-          }
-          value={filterValues.username}
-        />
         {user?.role === Role.ADMIN && (
-          <>
+          <div className="BrowseUsers__filter">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              onChange={(e) =>
+                setFilterValues({
+                  ...filterValues,
+                  email: e.target.value,
+                })
+              }
+              value={filterValues.email}
+            />
+          </div>
+        )}
+        <div className="BrowseUsers__filter">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            onChange={(e) =>
+              setFilterValues({
+                ...filterValues,
+                username: e.target.value,
+              })
+            }
+            value={filterValues.username}
+          />
+        </div>
+        {user?.role === Role.ADMIN && (
+          <div className="BrowseUsers__filter">
+            {" "}
             <label htmlFor="role">Role</label>
             <select
               name="role"
@@ -117,7 +124,7 @@ export const BrowseUsers = () => {
                 </option>
               ))}
             </select>
-          </>
+          </div>
         )}
       </div>
       <table id="BrowseUsers__table">
