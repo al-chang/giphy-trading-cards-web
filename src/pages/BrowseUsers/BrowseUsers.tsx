@@ -38,35 +38,45 @@ export const BrowseUsers = () => {
 
   return (
     <div>
-      <div id="BrowseUsers__container">
-        <table id="BrowseUsers__table">
-          <tbody>
-            <tr>
-              {user?.role === Role.ADMIN && <th>Email</th>}
-              <th>Username</th>
-              <th>Coins</th>
-              {user?.role === Role.ADMIN && <th>Role</th>}
-              <th>Joined</th>
-            </tr>
-            {users.map((_user) => (
-              <tr key={_user.id}>
-                {user?.role === Role.ADMIN && <td>{_user.email}</td>}
-                <td>
-                  <Link
-                    to={`/profile/${_user.id !== user?.id ? _user.id : ""}`}
-                    className="BrowseUsers__profile_link"
-                  >
-                    {_user.username}
-                  </Link>
+      <table id="BrowseUsers__table">
+        <tbody>
+          <tr id="BrowseUsers__table_head">
+            {user?.role === Role.ADMIN && <th>Email</th>}
+            <th>Username</th>
+            <th className="BrowseUsers__hide_mobile">Coins</th>
+            {user?.role === Role.ADMIN && (
+              <th className="BrowseUsers__hide_mobile">Role</th>
+            )}
+            <th>Joined</th>
+          </tr>
+          {users.map((_user) => (
+            <tr key={_user.id}>
+              {user?.role === Role.ADMIN && (
+                <td className="BrowseUsers__table_element">{_user.email}</td>
+              )}
+              <td className="BrowseUsers__table_element">
+                <Link
+                  to={`/profile/${_user.id !== user?.id ? _user.id : ""}`}
+                  className="BrowseUsers__profile_link"
+                >
+                  {_user.username}
+                </Link>
+              </td>
+              <td className="BrowseUsers__table_element BrowseUsers__hide_mobile">
+                {_user.coins}
+              </td>
+              {user?.role === Role.ADMIN && (
+                <td className="BrowseUsers__table_element BrowseUsers__hide_mobile">
+                  {_user.role}
                 </td>
-                <td>{_user.coins}</td>
-                {user?.role === Role.ADMIN && <td>{_user.role}</td>}
-                <td>{new Date(_user.createdAt).toLocaleDateString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              )}
+              <td className="BrowseUsers__table_element">
+                {new Date(_user.createdAt).toLocaleDateString()}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <div id="BrowseUsers__control">
         {previousPage && (
           <button
