@@ -12,6 +12,7 @@ const NagivationBar = () => {
     { name: "Home", path: "/" },
     { name: "Cards", path: "/cards" },
     { name: "Packs", path: "/packs" },
+    { name: "Users", path: "/users" },
     !!user ? { name: "Coins", path: "/coins" } : undefined,
   ];
 
