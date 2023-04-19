@@ -39,6 +39,9 @@ export const BrowseUsers = () => {
     loadUsers({
       limit: 20,
       page: parseInt(searchParams.get("page") || "1"),
+      email: searchParams.get("email"),
+      username: searchParams.get("username"),
+      role: searchParams.get("role"),
     });
   }, [searchParams]);
 
@@ -78,7 +81,9 @@ export const BrowseUsers = () => {
             >
               <option value="">All</option>
               {Object.values(Role).map((role) => (
-                <option value={role}>{role}</option>
+                <option key={role} value={role}>
+                  {role}
+                </option>
               ))}
             </select>
           </>
