@@ -5,6 +5,7 @@ import { Role } from "../../types";
 import { useUserContext } from "../../hooks/useUser";
 
 import "./index.css";
+import { debounce } from "../../utils";
 
 export type TUser = {
   id: string;
@@ -20,6 +21,11 @@ export const BrowseUsers = () => {
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const debounceSetSearchParams = debounce(
+    () => setSearchParams(searchParams),
+    500
+  );
 
   const { user } = useUserContext();
 
@@ -38,6 +44,46 @@ export const BrowseUsers = () => {
 
   return (
     <div>
+      <div id="BrowseUsers__filters">
+        <label htmlFor="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          onChange={(e) => {
+            searchParams.set("email", e.target.value);
+            debounceSetSearchParams(searchParams);
+          }}
+        />
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          onChange={(e) => {
+            searchParams.set("username", e.target.value);
+            debounceSetSearchParams(searchParams);
+          }}
+        />
+        {user?.role === Role.ADMIN && (
+          <>
+            <label htmlFor="role">Role</label>
+            <select
+              name="role"
+              id="role"
+              onChange={(e) => {
+                searchParams.set("role", e.target.value);
+                setSearchParams(searchParams);
+              }}
+            >
+              <option value="">All</option>
+              {Object.values(Role).map((role) => (
+                <option value={role}>{role}</option>
+              ))}
+            </select>
+          </>
+        )}
+      </div>
       <table id="BrowseUsers__table">
         <tbody>
           <tr id="BrowseUsers__table_head">
