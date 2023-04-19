@@ -1,0 +1,28 @@
+.ProposeTrade__cardscontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.ProposeTrade__cards {
+  width: 40%;
+  padding: 10px;
+}
+
+.ProposeTrade__deselectbutton {
+  width: 100%;
+  background-color: red;
+}
+
+.ProposeTrade__selectbutton {
+  width: 100%;
+  background-color: green;
+}
+
+.ProposeTrade_cardbutton {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.ProposeTrade_error {
+  color: white;
+}

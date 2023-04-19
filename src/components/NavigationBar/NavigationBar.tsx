@@ -14,6 +14,8 @@ const NagivationBar = () => {
     { name: "Packs", path: "/packs" },
   ];
 
+  if (user) links.push({ name: "Trades", path: "/trades" });
+
   const buttons = user ? (
     <button
       className="NavBar__button"
