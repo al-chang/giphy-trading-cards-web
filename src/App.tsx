@@ -11,6 +11,7 @@ import BrowsePacks from "./pages/BrowsePacks/BrowsePacks";
 import ViewCard from "./pages/ViewCard/ViewCard";
 import CreatePack from "./pages/CreatePack/CreatePack";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
+import Coins from "./pages/Coins/Coins";
 
 function App() {
   const permissionLevels = {
@@ -31,6 +32,14 @@ function App() {
           <Route path="/cards" element={<BrowseCards />} />
           <Route path="/card/:id" element={<ViewCard />} />
           <Route path="/packs" element={<BrowsePacks />} />
+          <Route
+            path="/coins"
+            element={
+              <RequireAuth allowedRoles={permissionLevels.allRoles}>
+                <Coins />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/packs/create"
             element={
