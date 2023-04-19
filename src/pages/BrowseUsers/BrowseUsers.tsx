@@ -21,6 +21,15 @@ export const BrowseUsers = () => {
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [filterValues, setFilterValues] = useState<{
+    email: string;
+    username: string;
+    role: Role | "";
+  }>({
+    email: searchParams.get("email") || "",
+    username: searchParams.get("username") || "",
+    role: (searchParams.get("role") as Role) || "",
+  });
 
   const debounceSetSearchParams = debounce(
     () => setSearchParams(searchParams),
@@ -45,6 +54,13 @@ export const BrowseUsers = () => {
     });
   }, [searchParams]);
 
+  useEffect(() => {
+    searchParams.set("email", filterValues.email);
+    searchParams.set("username", filterValues.username);
+    searchParams.set("role", filterValues.role);
+    debounceSetSearchParams(searchParams);
+  }, [filterValues]);
+
   return (
     <div>
       <div id="BrowseUsers__filters">
@@ -53,20 +69,26 @@ export const BrowseUsers = () => {
           type="text"
           name="email"
           id="email"
-          onChange={(e) => {
-            searchParams.set("email", e.target.value);
-            debounceSetSearchParams(searchParams);
-          }}
+          onChange={(e) =>
+            setFilterValues({
+              ...filterValues,
+              email: e.target.value,
+            })
+          }
+          value={filterValues.email}
         />
         <label htmlFor="username">Username</label>
         <input
           type="text"
           name="username"
           id="username"
-          onChange={(e) => {
-            searchParams.set("username", e.target.value);
-            debounceSetSearchParams(searchParams);
-          }}
+          onChange={(e) =>
+            setFilterValues({
+              ...filterValues,
+              username: e.target.value,
+            })
+          }
+          value={filterValues.username}
         />
         {user?.role === Role.ADMIN && (
           <>
@@ -74,10 +96,13 @@ export const BrowseUsers = () => {
             <select
               name="role"
               id="role"
-              onChange={(e) => {
-                searchParams.set("role", e.target.value);
-                setSearchParams(searchParams);
-              }}
+              onChange={(e) =>
+                setFilterValues({
+                  ...filterValues,
+                  role: e.target.value as Role,
+                })
+              }
+              value={filterValues.role}
             >
               <option value="">All</option>
               {Object.values(Role).map((role) => (
