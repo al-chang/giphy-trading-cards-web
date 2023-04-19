@@ -55,9 +55,15 @@ export const BrowseUsers = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    searchParams.set("email", filterValues.email);
-    searchParams.set("username", filterValues.username);
-    searchParams.set("role", filterValues.role);
+    !!filterValues.email
+      ? searchParams.set("email", filterValues.email)
+      : searchParams.delete("email");
+    !!filterValues.username
+      ? searchParams.set("username", filterValues.username)
+      : searchParams.delete("username");
+    !!filterValues.role
+      ? searchParams.set("role", filterValues.role)
+      : searchParams.delete("role");
     debounceSetSearchParams(searchParams);
   }, [filterValues]);
 
