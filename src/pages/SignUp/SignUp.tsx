@@ -11,7 +11,7 @@ export type SignUpForm = {
   password: string;
   confirmPassword: string;
 };
-
+// test
 const SignUp = () => {
   const [newUser, setNewUser] = useState<SignUpForm>({
     email: "",
