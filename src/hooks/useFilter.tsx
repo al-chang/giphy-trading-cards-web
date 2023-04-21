@@ -32,7 +32,17 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
     debounceSetSearchParams(searchParams, { [field]: value });
   };
 
+  // Set initial filter values from search params
   useEffect(() => {
+    Object.keys(filters).forEach((key) => {
+      const value = searchParams.get(key);
+      if (value) {
+        setFilterValue((prev) => ({ ...prev, [key]: value }));
+        setDebouncedFilterValues((prev) => ({ ...prev, [key]: value }));
+      }
+    });
+
+    // Cancel debounce on unmount
     return () => {
       debounceSetSearchParams.cancel();
     };
