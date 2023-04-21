@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUsersList } from "../../services/userService";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Role } from "../../types";
 import { useUserContext } from "../../hooks/useUser";
 
