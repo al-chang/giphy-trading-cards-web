@@ -21,7 +21,7 @@ export const BrowseUsers = () => {
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
 
-  const { filterValues, searchParams, handleFilterChange } = useFilter<{
+  const { filterValues, paramValues, handleFilterChange } = useFilter<{
     email: string;
     page: string;
     username: string;
@@ -44,12 +44,12 @@ export const BrowseUsers = () => {
     };
     loadUsers({
       limit: 20,
-      page: parseInt(searchParams.get("page") || "1"),
-      email: searchParams.get("email"),
-      username: searchParams.get("username"),
-      role: searchParams.get("role"),
+      page: parseInt(paramValues.get("page") || "1"),
+      email: paramValues.get("email"),
+      username: paramValues.get("username"),
+      role: paramValues.get("role"),
     });
-  }, [searchParams]);
+  }, [paramValues]);
 
   return (
     <div>

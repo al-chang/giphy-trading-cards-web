@@ -41,7 +41,7 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
   return {
     filterValues,
     handleFilterChange,
-    searchParams,
+    paramValues: searchParams as { get: (key: keyof T) => string | null },
   };
 };
 
