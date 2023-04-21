@@ -1,16 +1,30 @@
 #NavBar__container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   justify-content: space-between;
-  align-items: center;
   height: 8vh;
+  margin-top: 25px;
+}
+
+@media (min-width: 768px) {
+  #NavBar__container {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 #NavBar__logo {
+  display: none;
   width: 100px;
   height: 100%;
   margin: 0 0 0 20px;
   object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  #NavBar__logo {
+    display: block;
+  }
 }
 
 #NavBar__links_container {
@@ -33,8 +47,14 @@
 }
 
 .NavBar__list_item {
-  border-right: 4px solid rgb(var(--background));
   padding: 5px 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .NavBar__list_item {
+    border-right: 4px solid rgb(var(--background));
+    padding: 5px 20px;
+  }
 }
 
 .NavBar__list_item::before {
@@ -62,4 +82,49 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+#NavigationBar__auth_info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#NavigationBar__user {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#NavigationBar__user_link {
+  text-decoration: none;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #d25359,
+    #d0922b 20.31%,
+    #f9d651 39.06%,
+    #6bdc85 57.81%,
+    #498ff7 78.65%,
+    #716fd5
+  );
+  background-size: 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient 5s ease infinite;
+  font-weight: bold;
+  font-size: large;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

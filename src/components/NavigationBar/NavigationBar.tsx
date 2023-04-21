@@ -63,8 +63,14 @@ const NagivationBar = () => {
           );
         })}
       </ul>
-      <div>
-        <Link to="/profile">{user?.username}</Link>
+      <div id="NavigationBar__auth_info">
+        {!!user && (
+          <span id="NavigationBar__user">
+            <Link id="NavigationBar__user_link" to="/profile">
+              {user?.username}
+            </Link>
+          </span>
+        )}
         {buttons}
       </div>
     </nav>
