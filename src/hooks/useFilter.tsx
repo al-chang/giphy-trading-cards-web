@@ -13,14 +13,26 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
     [setSearchParams]
   );
 
-  const handleFilterChange = (field: keyof T & string, value: string) => {
+  type FilterChangeInput = {
+    field: keyof T & string;
+    value: string;
+    debounce?: boolean;
+  };
+
+  const handleFilterChange = ({
+    field,
+    value,
+    debounce,
+  }: FilterChangeInput) => {
     setFilterValue((prev) => ({ ...prev, [field]: value }));
     if (!value) {
       searchParams.delete(field);
     } else {
       searchParams.set(field, value);
     }
-    debounceSetSearchParams(searchParams);
+    debounce
+      ? debounceSetSearchParams(searchParams)
+      : setSearchParams(searchParams);
   };
 
   // Set initial filter values from search params
@@ -30,7 +42,7 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
       if (value) {
         setFilterValue((prev) => ({ ...prev, [key]: value }));
       }
-    });
+    }, []);
 
     // Cancel debounce on unmount
     return () => {

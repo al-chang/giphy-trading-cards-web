@@ -32,6 +32,11 @@ export const getPacks = async () => {
   return data;
 };
 
+export const getPack = async (packId: string) => {
+  const { data } = await api.get<TPack>(`${PACK_URL}/${packId}`);
+  return data;
+};
+
 export const createPack = async ({
   name,
   price,

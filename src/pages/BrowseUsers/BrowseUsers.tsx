@@ -61,7 +61,15 @@ export const BrowseUsers = () => {
               type="text"
               name="email"
               id="email"
-              onChange={(e) => handleFilterChange("email", e.target.value)}
+              className="App__text_input"
+              placeholder="Enter an email"
+              onChange={(e) =>
+                handleFilterChange({
+                  field: "email",
+                  value: e.target.value,
+                  debounce: true,
+                })
+              }
               value={filterValues.email}
             />
           </div>
@@ -72,7 +80,15 @@ export const BrowseUsers = () => {
             type="text"
             name="username"
             id="username"
-            onChange={(e) => handleFilterChange("username", e.target.value)}
+            className="App__text_input"
+            placeholder="Enter a username"
+            onChange={(e) =>
+              handleFilterChange({
+                field: "username",
+                value: e.target.value,
+                debounce: true,
+              })
+            }
             value={filterValues.username}
           />
         </div>
@@ -83,7 +99,10 @@ export const BrowseUsers = () => {
             <select
               name="role"
               id="role"
-              onChange={(e) => handleFilterChange("role", e.target.value)}
+              className="App__text_input"
+              onChange={(e) =>
+                handleFilterChange({ field: "role", value: e.target.value })
+              }
               value={filterValues.role}
             >
               <option value="">All</option>
@@ -139,7 +158,12 @@ export const BrowseUsers = () => {
         {previousPage && (
           <button
             className="App__Button"
-            onClick={() => handleFilterChange("page", previousPage.toString())}
+            onClick={() =>
+              handleFilterChange({
+                field: "page",
+                value: previousPage.toString(),
+              })
+            }
           >
             Previous
           </button>
@@ -147,7 +171,9 @@ export const BrowseUsers = () => {
         {nextPage && (
           <button
             className="App__Button"
-            onClick={() => handleFilterChange("page", nextPage.toString())}
+            onClick={() =>
+              handleFilterChange({ field: "page", value: nextPage.toString() })
+            }
           >
             Next
           </button>

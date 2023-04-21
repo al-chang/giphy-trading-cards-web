@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { getCards } from "../../services/cardService";
+import { useNavigate } from "react-router-dom";
+import { getCards, getPack } from "../../services/cardService";
 import Card from "../../components/Card/Card";
 
 import "./index.css";
+import useFilter from "../../hooks/useFilter";
+import { getUserProfile } from "../../services/userService";
 
 export type TCard = {
   id: string;
@@ -19,7 +21,18 @@ const BrowseCards = () => {
   const [cards, setCards] = useState<TCard[] | null>(null);
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [packName, setPackName] = useState<string | null>(null);
+  const [ownerName, setOwnerName] = useState<string | null>(null);
+
+  const { filterValues, handleFilterChange, paramValues } = useFilter({
+    ownerId: "",
+    packId: "",
+    page: "1",
+    cardName: "",
+    following: "",
+  });
+
+  const navigate = useNavigate();
 
   const getCardData = async (params: Record<string, any>) => {
     const data = await getCards(params);
@@ -31,14 +44,87 @@ const BrowseCards = () => {
   useEffect(() => {
     getCardData({
       limit: 12,
-      page: parseInt(searchParams.get("page") || "1"),
-      ownerId: searchParams.get("ownerId"),
-      packId: searchParams.get("packId"),
+      page: paramValues.get("page"),
+      ownerId: paramValues.get("ownerId"),
+      packId: paramValues.get("packId"),
+      cardName: paramValues.get("cardName"),
+      following: paramValues.get("following"),
     });
-  }, [searchParams]);
+  }, [paramValues]);
+
+  useEffect(() => {
+    if (filterValues.ownerId && filterValues.packId) {
+      navigate("/");
+      return;
+    }
+    if (filterValues.ownerId) {
+      const loadOwner = async () => {
+        const profile = await getUserProfile(filterValues.ownerId);
+        setOwnerName(profile.username);
+      };
+      loadOwner();
+      return;
+    }
+    if (filterValues.packId) {
+      const loadPack = async () => {
+        const pack = await getPack(filterValues.packId);
+        setPackName(pack.name);
+      };
+      loadPack();
+      return;
+    }
+    setOwnerName(null);
+    setPackName(null);
+  }, [filterValues]);
 
   return (
     <div>
+      <div id="BrowseCards__filters">
+        <div className="BrowseCards__filter">
+          <label htmlFor="username">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="App__text_input"
+            placeholder="Card name"
+            onChange={(e) =>
+              handleFilterChange({
+                field: "cardName",
+                value: e.target.value,
+                debounce: true,
+              })
+            }
+            value={filterValues.cardName}
+          />
+        </div>
+        <div className="BrowseCards__filter">
+          <label htmlFor="following">Following</label>
+          <input
+            type="checkbox"
+            name="following"
+            id="following"
+            className="App__text_input"
+            onChange={(e) =>
+              handleFilterChange({
+                field: "following",
+                value: e.target.checked ? "true" : "",
+              })
+            }
+            checked={filterValues.following === "true"}
+          />
+        </div>
+      </div>
+      {paramValues.get("packId") && (
+        <div id="BrowseCards__packName">
+          <h2>Found in {packName}</h2>
+        </div>
+      )}
+      {paramValues.get("ownerId") && (
+        <div id="BrowseCards__ownerName">
+          <h2>{ownerName}'s Cards</h2>
+        </div>
+      )}
       <div id="BrowseCards__container">
         {cards?.map((card) => (
           <Card key={card.id} {...card} />
@@ -48,10 +134,12 @@ const BrowseCards = () => {
         {previousPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", previousPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() =>
+              handleFilterChange({
+                field: "page",
+                value: previousPage.toString(),
+              })
+            }
           >
             Previous
           </button>
@@ -59,10 +147,9 @@ const BrowseCards = () => {
         {nextPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", nextPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() =>
+              handleFilterChange({ field: "page", value: nextPage.toString() })
+            }
           >
             Next
           </button>
