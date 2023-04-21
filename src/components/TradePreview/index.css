@@ -1,0 +1,18 @@
+.TradePreview__cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.TradePreview__sender_cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.TradePreview__card {
+  width: 20%;
+  object-fit: contain;
+}

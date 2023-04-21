@@ -32,8 +32,8 @@ export const BrowseUsers = () => {
   });
 
   const debounceSetSearchParams = useCallback(
-    debounce(() => setSearchParams(searchParams), 500),
-    [searchParams]
+    debounce(setSearchParams, 500),
+    []
   );
 
   const { user } = useUserContext();

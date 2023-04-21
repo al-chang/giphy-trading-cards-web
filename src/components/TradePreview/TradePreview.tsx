@@ -12,7 +12,7 @@ const TradePreview: React.FC<TTradeFeed> = ({
   return (
     <div>
       <div>
-        {sender.username} sent a trade to {receiver.username} at{" "}
+        {sender.username} sent a trade to {receiver.username} on{" "}
         {new Date(updatedAt).toDateString()}
       </div>
       <div className="TradePreview__cards">
@@ -20,18 +20,22 @@ const TradePreview: React.FC<TTradeFeed> = ({
           {cards
             .filter(({ card }) => card.ownerId === sender.id)
             .map(({ card }) => (
-              <div key={card.id} className="TradePreview__card">
-                <img src={card.gif} />
-              </div>
+              <img
+                key={card.id}
+                src={card.gif}
+                className="TradePreview__card"
+              />
             ))}
         </div>
         <div className="TradePreview__receiver_cards">
           {cards
             .filter(({ card }) => card.ownerId === receiver.id)
             .map(({ card }) => (
-              <div key={card.id} className="TradePreview__card">
-                <img src={card.gif} />
-              </div>
+              <img
+                key={card.id}
+                src={card.gif}
+                className="TradePreview__card"
+              />
             ))}
         </div>
       </div>
