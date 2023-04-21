@@ -4,22 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 
 const useFilter = <T extends Record<string, string>>(filters: T) => {
   const [filterValues, setFilterValue] = useState<T>(filters);
-  const [debouncedFilterValues, setDebouncedFilterValues] =
-    useState<T>(filters);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const debounceSetSearchParams = useCallback(
-    debounce(
-      (
-        _searchParams: typeof searchParams,
-        _value: Record<keyof T & string, string>
-      ) => {
-        setSearchParams(searchParams);
-        setDebouncedFilterValues((prev) => ({ ...prev, ..._value }));
-      },
-      500
-    ),
-    [setFilterValue, setDebouncedFilterValues]
+    debounce((_searchParams: typeof searchParams) => {
+      setSearchParams(_searchParams);
+    }, 500),
+    [setSearchParams]
   );
 
   const handleFilterChange = (field: keyof T & string, value: string) => {
@@ -29,7 +20,7 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
     } else {
       searchParams.set(field, value);
     }
-    debounceSetSearchParams(searchParams, { [field]: value });
+    debounceSetSearchParams(searchParams);
   };
 
   // Set initial filter values from search params
@@ -38,7 +29,6 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
       const value = searchParams.get(key);
       if (value) {
         setFilterValue((prev) => ({ ...prev, [key]: value }));
-        setDebouncedFilterValues((prev) => ({ ...prev, [key]: value }));
       }
     });
 
@@ -51,7 +41,7 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
   return {
     filterValues,
     handleFilterChange,
-    debouncedFilterValues,
+    searchParams,
   };
 };
 

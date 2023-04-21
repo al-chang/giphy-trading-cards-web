@@ -21,18 +21,17 @@ export const BrowseUsers = () => {
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
 
-  const { filterValues, debouncedFilterValues, handleFilterChange } =
-    useFilter<{
-      email: string;
-      page: string;
-      username: string;
-      role: Role | "";
-    }>({
-      email: "",
-      page: "",
-      username: "",
-      role: "",
-    });
+  const { filterValues, searchParams, handleFilterChange } = useFilter<{
+    email: string;
+    page: string;
+    username: string;
+    role: Role | "";
+  }>({
+    email: "",
+    page: "",
+    username: "",
+    role: "",
+  });
 
   const { user } = useUserContext();
 
@@ -45,12 +44,12 @@ export const BrowseUsers = () => {
     };
     loadUsers({
       limit: 20,
-      page: parseInt(debouncedFilterValues.page || "1"),
-      email: debouncedFilterValues.email,
-      username: debouncedFilterValues.username,
-      role: debouncedFilterValues.role,
+      page: parseInt(searchParams.get("page") || "1"),
+      email: searchParams.get("email"),
+      username: searchParams.get("username"),
+      role: searchParams.get("role"),
     });
-  }, [debouncedFilterValues]);
+  }, [searchParams]);
 
   return (
     <div>
