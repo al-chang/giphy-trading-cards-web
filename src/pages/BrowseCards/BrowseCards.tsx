@@ -4,6 +4,7 @@ import { getCards } from "../../services/cardService";
 import Card from "../../components/Card/Card";
 
 import "./index.css";
+import useFilter from "../../hooks/useFilter";
 
 export type TCard = {
   id: string;
@@ -19,7 +20,12 @@ const BrowseCards = () => {
   const [cards, setCards] = useState<TCard[] | null>(null);
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { filterValues, handleFilterChange, paramValues } = useFilter({
+    ownerId: "",
+    packId: "",
+    page: "1",
+  });
 
   const getCardData = async (params: Record<string, any>) => {
     const data = await getCards(params);
@@ -31,11 +37,11 @@ const BrowseCards = () => {
   useEffect(() => {
     getCardData({
       limit: 12,
-      page: parseInt(searchParams.get("page") || "1"),
-      ownerId: searchParams.get("ownerId"),
-      packId: searchParams.get("packId"),
+      page: paramValues.get("page"),
+      ownerId: paramValues.get("ownerId"),
+      packId: paramValues.get("packId"),
     });
-  }, [searchParams]);
+  }, [paramValues]);
 
   return (
     <div>
@@ -48,10 +54,12 @@ const BrowseCards = () => {
         {previousPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", previousPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() =>
+              handleFilterChange({
+                field: "page",
+                value: previousPage.toString(),
+              })
+            }
           >
             Previous
           </button>
@@ -59,10 +67,9 @@ const BrowseCards = () => {
         {nextPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", nextPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() =>
+              handleFilterChange({ field: "page", value: nextPage.toString() })
+            }
           >
             Next
           </button>
