@@ -16,11 +16,6 @@ export const getUsersList = async (params: Record<string, any>) => {
   return res.data;
 };
 
-export const getUserFeed = async () => {
-  const res = await api.get<Record<string, any>[]>(`/feed`);
-  return res.data;
-};
-
 export const followUser = async (userId: string) => {
   await api.post(`${USER_URL}/${userId}/follow`);
 };
