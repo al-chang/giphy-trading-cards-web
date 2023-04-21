@@ -4,7 +4,7 @@ import { getCards } from "../../services/cardService";
 import { TCard } from "../BrowseCards/BrowseCards";
 import Card from "../../components/Card/Card";
 import { TFeedItem, getFeed, isTCardFeed } from "../../services/feedService";
-import TradePreview from "../../components/TradePreview/TradePreview";
+import TradePreviewFeed from "../../components/TradePreviewFeed/TradePreviewFeed";
 
 import "./index.css";
 
@@ -43,7 +43,7 @@ const Home = () => {
                 </div>
               );
             } else {
-              return <TradePreview key={item.id} {...item} />;
+              return <TradePreviewFeed key={item.id} {...item} />;
             }
           })
         : cards?.map((card) => (
