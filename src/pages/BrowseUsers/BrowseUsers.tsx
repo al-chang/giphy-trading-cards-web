@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getUsersList } from "../../services/userService";
 import { Link, useSearchParams } from "react-router-dom";
 import { Role } from "../../types";
@@ -31,9 +31,9 @@ export const BrowseUsers = () => {
     role: (searchParams.get("role") as Role) || "",
   });
 
-  const debounceSetSearchParams = debounce(
-    () => setSearchParams(searchParams),
-    500
+  const debounceSetSearchParams = useCallback(
+    debounce(() => setSearchParams(searchParams), 500),
+    [searchParams]
   );
 
   const { user } = useUserContext();
@@ -65,6 +65,9 @@ export const BrowseUsers = () => {
       ? searchParams.set("role", filterValues.role)
       : searchParams.delete("role");
     debounceSetSearchParams(searchParams);
+    return () => {
+      debounceSetSearchParams.cancel();
+    };
   }, [filterValues]);
 
   return (

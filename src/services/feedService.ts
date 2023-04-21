@@ -33,6 +33,7 @@ export type TTradeFeed = {
     card: {
       id: string;
       gif: string;
+      ownerId: string;
     };
   }[];
 };
