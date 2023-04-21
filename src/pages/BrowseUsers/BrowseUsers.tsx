@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { getUsersList } from "../../services/userService";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Role } from "../../types";
 import { useUserContext } from "../../hooks/useUser";
 
 import "./index.css";
-import { debounce } from "../../utils";
+import useFilter from "../../hooks/useFilter";
 
 export type TUser = {
   id: string;
@@ -20,21 +20,18 @@ export const BrowseUsers = () => {
   const [users, setUsers] = useState<TUser[]>([]);
   const [nextPage, setNextPage] = useState<number | null>(null);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [filterValues, setFilterValues] = useState<{
+
+  const { filterValues, paramValues, handleFilterChange } = useFilter<{
     email: string;
+    page: string;
     username: string;
     role: Role | "";
   }>({
-    email: searchParams.get("email") || "",
-    username: searchParams.get("username") || "",
-    role: (searchParams.get("role") as Role) || "",
+    email: "",
+    page: "",
+    username: "",
+    role: "",
   });
-
-  const debounceSetSearchParams = debounce(
-    () => setSearchParams(searchParams),
-    500
-  );
 
   const { user } = useUserContext();
 
@@ -47,25 +44,12 @@ export const BrowseUsers = () => {
     };
     loadUsers({
       limit: 20,
-      page: parseInt(searchParams.get("page") || "1"),
-      email: searchParams.get("email"),
-      username: searchParams.get("username"),
-      role: searchParams.get("role"),
+      page: parseInt(paramValues.get("page") || "1"),
+      email: paramValues.get("email"),
+      username: paramValues.get("username"),
+      role: paramValues.get("role"),
     });
-  }, [searchParams]);
-
-  useEffect(() => {
-    !!filterValues.email
-      ? searchParams.set("email", filterValues.email)
-      : searchParams.delete("email");
-    !!filterValues.username
-      ? searchParams.set("username", filterValues.username)
-      : searchParams.delete("username");
-    !!filterValues.role
-      ? searchParams.set("role", filterValues.role)
-      : searchParams.delete("role");
-    debounceSetSearchParams(searchParams);
-  }, [filterValues]);
+  }, [paramValues]);
 
   return (
     <div>
@@ -77,12 +61,7 @@ export const BrowseUsers = () => {
               type="text"
               name="email"
               id="email"
-              onChange={(e) =>
-                setFilterValues({
-                  ...filterValues,
-                  email: e.target.value,
-                })
-              }
+              onChange={(e) => handleFilterChange("email", e.target.value)}
               value={filterValues.email}
             />
           </div>
@@ -93,12 +72,7 @@ export const BrowseUsers = () => {
             type="text"
             name="username"
             id="username"
-            onChange={(e) =>
-              setFilterValues({
-                ...filterValues,
-                username: e.target.value,
-              })
-            }
+            onChange={(e) => handleFilterChange("username", e.target.value)}
             value={filterValues.username}
           />
         </div>
@@ -109,12 +83,7 @@ export const BrowseUsers = () => {
             <select
               name="role"
               id="role"
-              onChange={(e) =>
-                setFilterValues({
-                  ...filterValues,
-                  role: e.target.value as Role,
-                })
-              }
+              onChange={(e) => handleFilterChange("role", e.target.value)}
               value={filterValues.role}
             >
               <option value="">All</option>
@@ -170,10 +139,7 @@ export const BrowseUsers = () => {
         {previousPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", previousPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() => handleFilterChange("page", previousPage.toString())}
           >
             Previous
           </button>
@@ -181,10 +147,7 @@ export const BrowseUsers = () => {
         {nextPage && (
           <button
             className="App__Button"
-            onClick={() => {
-              searchParams.set("page", nextPage.toString());
-              setSearchParams(searchParams);
-            }}
+            onClick={() => handleFilterChange("page", nextPage.toString())}
           >
             Next
           </button>
