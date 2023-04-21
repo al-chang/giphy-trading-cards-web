@@ -106,7 +106,9 @@ const Profile = () => {
       </p>
       <p>
         <strong>Coins:</strong> {profile?.coins}{" "}
-        <button onClick={() => setIsModalOpen(true)}>+</button>
+        {user?.role === Role.ADMIN && (
+          <button onClick={() => setIsModalOpen(true)}>+</button>
+        )}
       </p>
       <p>
         <strong>Joined:</strong>{" "}
