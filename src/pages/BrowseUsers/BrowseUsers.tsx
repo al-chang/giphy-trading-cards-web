@@ -61,6 +61,8 @@ export const BrowseUsers = () => {
               type="text"
               name="email"
               id="email"
+              className="App__text_input"
+              placeholder="Enter an email"
               onChange={(e) =>
                 handleFilterChange({
                   field: "email",
@@ -78,6 +80,8 @@ export const BrowseUsers = () => {
             type="text"
             name="username"
             id="username"
+            className="App__text_input"
+            placeholder="Enter a username"
             onChange={(e) =>
               handleFilterChange({
                 field: "username",
@@ -95,6 +99,7 @@ export const BrowseUsers = () => {
             <select
               name="role"
               id="role"
+              className="App__text_input"
               onChange={(e) =>
                 handleFilterChange({ field: "role", value: e.target.value })
               }

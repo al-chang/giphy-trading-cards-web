@@ -42,7 +42,7 @@ const useFilter = <T extends Record<string, string>>(filters: T) => {
       if (value) {
         setFilterValue((prev) => ({ ...prev, [key]: value }));
       }
-    });
+    }, []);
 
     // Cancel debounce on unmount
     return () => {
