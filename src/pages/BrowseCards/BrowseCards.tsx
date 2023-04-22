@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCards, getPack } from "../../services/cardService";
 import Card from "../../components/Card/Card";
 
@@ -14,7 +14,7 @@ export type TCard = {
   gif: string;
   createdAt: string;
   updatedAt: string;
-  packId: string;
+  packId?: string;
   ownerId: string;
 };
 

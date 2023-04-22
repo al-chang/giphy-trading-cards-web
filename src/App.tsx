@@ -17,6 +17,7 @@ import ReviewTrade from "./pages/ReviewTrade/ReviewTrade";
 import Coins from "./pages/Coins/Coins";
 import BrowseUsers from "./pages/BrowseUsers/BrowseUsers";
 import EditPofile from "./pages/EditProfile/EditProfile";
+import CustomCardSelect from "./pages/CustomCardSelect/CustomCardSelect";
 
 function App() {
   const permissionLevels = {
@@ -55,6 +56,14 @@ function App() {
             element={
               <RequireAuth allowedRoles={permissionLevels.admin}>
                 <CreatePack />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/cards/custom"
+            element={
+              <RequireAuth allowedRoles={permissionLevels.allRoles}>
+                <CustomCardSelect />
               </RequireAuth>
             }
           />

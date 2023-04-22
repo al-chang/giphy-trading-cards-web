@@ -8,7 +8,7 @@ import "./index.css";
 import { useUserContext } from "../../hooks/useUser";
 
 export type TSingleCard = TCard & {
-  pack: TPack;
+  pack?: TPack;
   owner: { id: true; username: string };
 };
 
@@ -51,7 +51,7 @@ const ViewCard = () => {
             </Link>
           </li>
           <li>
-            <strong>From Pack:</strong> {card?.pack.name}
+            <strong>From Pack:</strong> {card?.pack?.name || "Custom"}
           </li>
           <li>
             <strong>Packed:</strong>{" "}
