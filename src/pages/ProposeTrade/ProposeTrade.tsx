@@ -21,6 +21,7 @@ const ProposeTrade = () => {
   const [userCards, setUserCards] = useState<TradableCard[] | null>(null);
   const [otherCards, setOtherCards] = useState<TradableCard[] | null>(null);
   const [errorText, setErrorText] = useState<string>("");
+  const navigate = useNavigate();
 
   const getUserCardData = async () => {
     const data = await getCards({ ownerId: user?.id });
@@ -71,7 +72,7 @@ const ProposeTrade = () => {
       setErrorText("");
       const cardIds = sending?.concat(receiving).map((c) => c.id);
       const tradeId = await sendTrade(otherId, cardIds);
-      alert(`Trade Id: ${tradeId}`);
+      navigate(`/trade/${tradeId}`);
     } catch (error) {
       setErrorText("Error proposing trade");
     }

@@ -25,6 +25,7 @@ const ReviewTrade = () => {
   const { id } = useParams();
   const { user } = useUserContext();
   const [responseMessage, setResponseMessage] = useState<String | null>();
+  const [authorized, setAuthorized] = useState<Boolean>(false);
   const navigate = useNavigate();
 
   const onAcceptTrade = async () => {
@@ -51,27 +52,34 @@ const ReviewTrade = () => {
       navigate("/");
       return;
     }
-
     const getTradeData = async () => {
       const tradeData = await getPendingTrade(id);
       setTrade(tradeData);
     };
+    getTradeData();
+  }, [user]);
 
+  useEffect(() => {
     const getUserData = async (
       id: string | undefined,
       sender: boolean
     ): Promise<User | undefined> => {
-      if (!id) return undefined;
+      if (!id) {
+        return undefined;
+      }
       const profile = await getUserProfile(id);
       sender ? setSender(profile) : setReceiver(profile);
     };
-
-    getTradeData();
     getUserData(trade?.sender.id, true);
     getUserData(trade?.receiver.id, false);
-  }, [id, user]);
+    setAuthorized(
+      user?.role === "ADMIN" ||
+        trade?.sender.id === user?.id ||
+        trade?.receiver.id === user?.id
+    );
+  }, [trade]);
 
-  return (
+  return authorized ? (
     <div className={"ReviewTrade__background"}>
       <h2>{`${sender?.username} Receives:`}</h2>
       <div className={"ReviewTrade__container"}>
@@ -100,11 +108,15 @@ const ReviewTrade = () => {
           })}
       </div>
       <div className="ReviewTrade__buttons">
-        <Button onClick={onAcceptTrade}>Accept</Button>
+        <Button disabled={user?.id === sender?.id} onClick={onAcceptTrade}>
+          Accept
+        </Button>
         <Button onClick={onRejectTrade}>Reject</Button>
         {responseMessage && responseMessage !== "" && <p>{responseMessage}</p>}
       </div>
     </div>
+  ) : (
+    <h2>You Are Not Authorized to View this Trade!</h2>
   );
 };
 
