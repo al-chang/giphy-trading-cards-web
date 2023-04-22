@@ -14,6 +14,9 @@ import RequireAuth from "./components/RequireAuth/RequireAuth";
 import ProposeTrade from "./pages/ProposeTrade/ProposeTrade";
 import Trades from "./pages/Trades/Trades";
 import ReviewTrade from "./pages/ReviewTrade/ReviewTrade";
+import Coins from "./pages/Coins/Coins";
+import BrowseUsers from "./pages/BrowseUsers/BrowseUsers";
+
 
 function App() {
   const permissionLevels = {
@@ -30,6 +33,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/log-in" element={<LogIn />} />
+          <Route path="/users" element={<BrowseUsers />} />
           <Route path="/profile/:id?" element={<Profile />} />
           <Route path="/cards" element={<BrowseCards />} />
           <Route path="/card/:id" element={<ViewCard />} />
@@ -37,6 +41,14 @@ function App() {
           <Route path="/trades" element={<Trades />}></Route>
           <Route path="/propose/:otherId" element={<ProposeTrade />} />
           <Route path="/trade/:id" element={<ReviewTrade />} />
+          <Route
+            path="/coins"
+            element={
+              <RequireAuth allowedRoles={permissionLevels.allRoles}>
+                <Coins />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/packs/create"
             element={

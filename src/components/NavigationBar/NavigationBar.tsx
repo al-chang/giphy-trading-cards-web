@@ -12,6 +12,8 @@ const NagivationBar = () => {
     { name: "Home", path: "/" },
     { name: "Cards", path: "/cards" },
     { name: "Packs", path: "/packs" },
+    { name: "Users", path: "/users" },
+    !!user ? { name: "Coins", path: "/coins" } : undefined,
   ];
 
   if (user) links.push({ name: "Trades", path: "/trades" });
@@ -52,16 +54,25 @@ const NagivationBar = () => {
     <nav id="NavBar__container">
       <img id="NavBar__logo" src="/giphymon.png" alt="GIPHYmon logo" />
       <ul id="NavBar__links_container">
-        {links.map((link) => (
-          <li key={link.name} className="NavBar__list_item">
-            <Link to={link.path} className="NavBar__link">
-              {link.name}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) => {
+          if (!link) return null;
+          return (
+            <li key={link.name} className="NavBar__list_item">
+              <Link to={link.path} className="NavBar__link">
+                {link.name}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
-      <div>
-        <Link to="/profile">{user?.username}</Link>
+      <div id="NavigationBar__auth_info">
+        {!!user && (
+          <span id="NavigationBar__user">
+            <Link id="NavigationBar__user_link" to="/profile">
+              {user?.username}
+            </Link>
+          </span>
+        )}
         {buttons}
       </div>
     </nav>

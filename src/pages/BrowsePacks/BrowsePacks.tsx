@@ -22,7 +22,7 @@ const BrowsePacks = () => {
   const [packs, setPacks] = useState<TPack[] | null>(null);
   const [coins, setCoins] = useState<number>(0);
 
-  const { user } = useUserContext();
+  const { user, loading } = useUserContext();
   const navigate = useNavigate();
 
   const buyPack = async (id: string) => {
@@ -31,24 +31,35 @@ const BrowsePacks = () => {
   };
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadPacks = async () => {
       const _packs = await getPacks();
-      const _coins = await getCoins();
       setPacks(_packs);
-      setCoins(_coins);
+    };
+    const loadCoins = async () => {
+      const _coins = await getCoins();
+      setCoins(_coins.coins);
     };
 
-    loadData();
-  }, []);
+    loadPacks();
+    if (user && !loading) {
+      loadCoins();
+    }
+  }, [user, loading]);
 
   return (
     <div id="BrowsePacks__container">
       <div id="BrowsePacks__header">
         <h1 id="BrowsePacks__title">Packs</h1>
-        <div id="BrowsePacks__coins">
-          <img src="/coin.png" alt="coin" id="BrowsePacks__coin_image" />
-          {coins}
-        </div>
+        {user && (
+          <div id="BrowsePacks__coins">
+            <img
+              src="https://media4.giphy.com/media/TiDqYW1SQiA38RgoyY/giphy.gif?cid=ecf05e479p6ao7qowd9uyo2ezjzk3dif50b9r0myvr80zviz&rid=giphy.gif&ct=g"
+              alt="coin"
+              id="BrowsePacks__coin_image"
+            />
+            {coins}
+          </div>
+        )}
       </div>
       {user?.role === Role.ADMIN && (
         <Link id="BrowsePacks__add_button" to="/packs/create">

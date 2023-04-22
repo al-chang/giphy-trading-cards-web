@@ -7,7 +7,7 @@ import api from "./api";
 const CARD_URL = "/cards";
 const PACK_URL = "/packs";
 
-export const getCards = async (params: Record<string, any>) => {
+export const getCards = async (params?: Record<string, any>) => {
   const { data } = await api.get<Paginated<TCard>>(CARD_URL, { params });
   return data;
 };
@@ -29,6 +29,11 @@ export const openPack = async (packId: string) => {
 
 export const getPacks = async () => {
   const { data } = await api.get<TPack[]>(`${PACK_URL}`);
+  return data;
+};
+
+export const getPack = async (packId: string) => {
+  const { data } = await api.get<TPack>(`${PACK_URL}/${packId}`);
   return data;
 };
 

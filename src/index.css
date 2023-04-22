@@ -1,6 +1,7 @@
 :root {
   --background: 18, 18, 18;
   --primary-font: 255, 255, 255;
+  --disabled-font: 100, 100, 100;
 
   /* Breakpoints for reference */
   --x-small: 576px;
@@ -27,6 +28,23 @@ body {
   border-radius: 5px;
   padding: 10px;
   font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.App__Button:disabled {
+  background-color: rgb(var(--background));
+  color: rgb(var(--disabled-font));
+  border: 1px solid rgb(var(--disabled-font));
+  cursor: not-allowed;
+}
+
+.App__text_input {
+  background-color: rgb(var(--background));
+  color: rgb(var(--primary-font));
+  border: 1px solid rgb(var(--primary-font));
+  border-radius: 5px;
+  padding: 10px;
   font-weight: 500;
   cursor: pointer;
 }
