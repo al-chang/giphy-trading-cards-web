@@ -39,3 +39,34 @@ export const collectCoins = async () => {
 export const addCoins = async (coins: number, userId: string) => {
   await api.post(COINS_URL, { coins, userId });
 };
+
+export const updateUsername = async (
+  userId: string,
+  updatedUsername: string
+) => {
+  const response = await api.put(`${USER_URL}/${userId}/edit/username`, {
+    updatedUsername,
+  });
+  return response;
+};
+
+export const updateUserEmail = async (
+  userId: string,
+  updatedUserEmail: string
+) => {
+  const response = await api.put(`${USER_URL}/${userId}/edit/email`, {
+    updatedUserEmail,
+  });
+  return response;
+};
+
+export const updateUserPassword = async (
+  userId: string,
+  updatedUserPasword: string
+) => {
+  console.log(updatedUserPasword);
+  const response = await api.put(`${USER_URL}/${userId}/edit/password`, {
+    updatedUserPasword,
+  });
+  return response;
+};

@@ -28,7 +28,7 @@ const TradePreview: React.FC<TTradeFeed> = ({
             </span>
           </div>
         </div>
-        {receiver.id === user?.id && (
+        {status === "PENDING" && receiver.id === user?.id && (
           <Link className="TradePreview__view" to={`/trade/${id}`}>
             <div className="TradePreview__view_link">Review Trade</div>
           </Link>
