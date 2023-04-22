@@ -76,8 +76,10 @@ export const updatePack = async ({
   return data;
 };
 
-export const getCandidateCards = async (tag: string) => {
-  const { data } = await api.get(`/custom/${CARD_URL}?tag=${tag}`);
+export const getCandidateCards = async (term: string) => {
+  const { data } = await api.get<{ gif: string; source: string }[]>(
+    `/custom${CARD_URL}?term=${term}`
+  );
   return data;
 };
 
@@ -88,5 +90,11 @@ export const createCardFromCandidate = async ({
   gif: string;
   source: string;
 }) => {
-  await api.post(`/custom/${CARD_URL}`, { gif, source });
+  console.log(gif, source);
+  // set body of request to { gif, source }
+  const res = await api.post<string>(`/custom${CARD_URL}`, {
+    gif,
+    source,
+  });
+  return res.data;
 };

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCards, getPack } from "../../services/cardService";
-import Card from "../../components/Card/Card";
+import {
+  createCardFromCandidate,
+  getCandidateCards,
+} from "../../services/cardService";
 
 import "./index.css";
+import "../../components/Card/index.css";
+
 import useFilter from "../../hooks/useFilter";
-import { getUserProfile } from "../../services/userService";
 
 export type TCard = {
   id: string;
@@ -18,7 +21,9 @@ export type TCard = {
 };
 
 const BrowseCards = () => {
-  const [cards, setCards] = useState<TCard[] | null>(null);
+  const [cards, setCards] = useState<{ gif: string; source: string }[] | null>(
+    null
+  );
 
   const { filterValues, handleFilterChange, paramValues } = useFilter({
     term: "",
@@ -26,16 +31,21 @@ const BrowseCards = () => {
 
   const navigate = useNavigate();
 
-  const getCardData = async (params: Record<string, any>) => {
-    const data = await getCards(params);
-    setCards(data.data);
+  const getCardData = async (tag: string | null) => {
+    if (!tag) return;
+
+    const data = await getCandidateCards(tag);
+    setCards(data);
+  };
+
+  const purchaseCard = async (gif: string, source: string) => {
+    const id = await createCardFromCandidate({ gif, source });
+
+    navigate(`/card/${id}`);
   };
 
   useEffect(() => {
-    getCardData({
-      limit: 12,
-      term: paramValues.get("term"),
-    });
+    getCardData(paramValues.get("term"));
   }, [paramValues]);
 
   return (
@@ -58,11 +68,32 @@ const BrowseCards = () => {
             }
             value={filterValues.term}
           />
+          <button
+            className="App__Button"
+            onClick={() => getCardData(paramValues.get("term"))}
+            disabled={!filterValues.term}
+          >
+            Re-roll
+          </button>
         </div>
       </div>
       <div id="BrowseCards__container">
         {cards?.map((card) => (
-          <Card key={card.id} {...card} />
+          <div key={card.gif}>
+            <div className="Card__background Card__bordergradient">
+              <div
+                className="Card__container"
+                style={{ backgroundImage: `url(${card.gif})` }}
+              ></div>
+            </div>
+            <button
+              className="App__Button"
+              style={{ width: "100%" }}
+              onClick={() => purchaseCard(card.gif, card.source)}
+            >
+              Purchase (10,000 coins)
+            </button>
+          </div>
         ))}
       </div>
     </div>
