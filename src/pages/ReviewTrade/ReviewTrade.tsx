@@ -6,15 +6,10 @@ import {
   getPendingTrade,
   TPendingTrade,
 } from "../../services/tradeService";
-import { Trade } from "../Trades/Trades";
 import { getUserProfile } from "../../services/userService";
 import { TProfile } from "../Profile/Profile";
 import { User } from "../../types";
-import { getCard } from "../../services/cardService";
 import { useUserContext } from "../../hooks/useUser";
-import { TCard } from "../BrowseCards/BrowseCards";
-import { TSingleCard } from "../ViewCard/ViewCard";
-import { Button } from "antd";
 
 import "./index.css";
 
@@ -86,11 +81,6 @@ const ReviewTrade = () => {
         {trade?.cards
           ?.filter((c) => c.card.ownerId === trade.receiver.id)
           .map((c) => {
-            const props = {
-              id: c.card.id,
-              name: c.card.name,
-              gif: c.card.gif,
-            };
             return <Card key={c.card.id} {...c.card} />;
           })}
       </div>
@@ -99,19 +89,18 @@ const ReviewTrade = () => {
         {trade?.cards
           ?.filter((c) => c.card.ownerId === trade.sender.id)
           .map((c) => {
-            const props = {
-              id: c.card.id,
-              name: c.card.name,
-              gif: c.card.gif,
-            };
             return <Card key={c.card.id} {...c.card} />;
           })}
       </div>
       <div className="ReviewTrade__buttons">
-        <Button disabled={user?.id === sender?.id} onClick={onAcceptTrade}>
-          Accept
-        </Button>
-        <Button onClick={onRejectTrade}>Reject</Button>
+        {user?.id === receiver?.id && (
+          <button className="App__Button" onClick={onAcceptTrade}>
+            Accept
+          </button>
+        )}
+        <button className="App__Button" onClick={onRejectTrade}>
+          Reject
+        </button>
         {responseMessage && responseMessage !== "" && <p>{responseMessage}</p>}
       </div>
     </div>

@@ -1,15 +1,11 @@
 import { useUserContext } from "../../hooks/useUser";
-import { logout } from "../../services/authService";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { getPendingTrades, sendTrade } from "../../services/tradeService";
+import { useNavigate, useParams } from "react-router-dom";
+import { sendTrade } from "../../services/tradeService";
 import { TCard } from "../BrowseCards/BrowseCards";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import { getCards } from "../../services/cardService";
 import "./index.css";
-import { Button } from "antd";
-import { User } from "../../types";
 import { getUserProfile } from "../../services/userService";
 import { TProfile } from "../Profile/Profile";
 
@@ -107,8 +103,8 @@ const ProposeTrade = () => {
 
   const displayCards = (tradeCard: TradableCard) => {
     return (
-      <div className="ProposeTrade__cardbutton">
-        <Card key={tradeCard.card.id} {...tradeCard.card} />
+      <div key={tradeCard.card.id} className="ProposeTrade__cardbutton">
+        <Card {...tradeCard.card} />
         <button
           className={`ProposeTrade__button ${
             tradeCard.selected

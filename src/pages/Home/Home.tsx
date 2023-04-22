@@ -29,7 +29,7 @@ const Home = () => {
   }, [user, loading]);
 
   return (
-    <div>
+    <div id="Home__container">
       {user ? (
         feed && feed.length > 0 ? (
           feed.map((item) => {

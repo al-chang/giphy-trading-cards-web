@@ -90,8 +90,6 @@ export const createCardFromCandidate = async ({
   gif: string;
   source: string;
 }) => {
-  console.log(gif, source);
-  // set body of request to { gif, source }
   const res = await api.post<string>(`/custom${CARD_URL}`, {
     gif,
     source,
