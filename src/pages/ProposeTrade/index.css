@@ -1,11 +1,4 @@
 .ProposeTrade__cardscontainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.ProposeTrade__cards {
-  width: 40%;
-  padding: 10px;
 }
 
 .ProposeTrade__deselectbutton {
@@ -25,4 +18,61 @@
 
 .ProposeTrade_error {
   color: white;
+}
+
+.ProposeTrade__nav {
+  display: flex;
+  justify-content: center;
+}
+
+.ProposeTrade__tab {
+  padding: 5px 10px;
+  margin: 4px;
+  border-bottom: 5px solid;
+  color: darkgray;
+  cursor: pointer;
+}
+
+.ProposeTrade__tab-selected {
+  color: white;
+}
+
+#ProposeTrade__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  #ProposeTrade__container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #ProposeTrade__container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.ProposeTrade__selectbutton {
+  color: rgb(0, 255, 153);
+  border: 1px solid rgb(0, 255, 153);
+}
+
+.ProposeTrade__removebutton {
+  color: rgb(240, 7, 97);
+  border: 1px solid rgb(240, 7, 97);
+}
+
+.ProposeTrade__button {
+  margin-top: 4px;
+  background-color: rgb(var(--background));
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
 }
