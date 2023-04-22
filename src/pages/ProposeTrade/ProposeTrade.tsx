@@ -9,6 +9,9 @@ import Card from "../../components/Card/Card";
 import { getCards } from "../../services/cardService";
 import "./index.css";
 import { Button } from "antd";
+import { User } from "../../types";
+import { getUserProfile } from "../../services/userService";
+import { TProfile } from "../Profile/Profile";
 
 type TradableCard = {
   card: TCard;
@@ -21,6 +24,10 @@ const ProposeTrade = () => {
   const [userCards, setUserCards] = useState<TradableCard[] | null>(null);
   const [otherCards, setOtherCards] = useState<TradableCard[] | null>(null);
   const [errorText, setErrorText] = useState<string>("");
+  const [showOwnCards, setShowOwnCards] = useState<boolean>(true);
+  const [numOwnSelected, setNumOwnSelected] = useState<number>(0);
+  const [numOtherSelected, setNumOtherSelected] = useState<number>(0);
+  const [otherUser, setOtherUser] = useState<TProfile | null>(null);
   const navigate = useNavigate();
 
   const getUserCardData = async () => {
@@ -35,6 +42,11 @@ const ProposeTrade = () => {
     const otherCards: TradableCard[] = [];
     data.data.forEach((c) => otherCards.push({ card: c, selected: false }));
     setOtherCards(otherCards);
+
+    if (otherId) {
+      const userData = await getUserProfile(otherId);
+      setOtherUser(userData);
+    }
   };
 
   const toggleSelectedUser = (cardId: string) => {
@@ -42,6 +54,10 @@ const ProposeTrade = () => {
     userCards?.forEach((c) => {
       cards.push(c.card.id === cardId ? { ...c, selected: !c.selected } : c);
     });
+
+    userCards?.find((c) => c.card.id === cardId)?.selected
+      ? setNumOwnSelected(numOwnSelected + 1)
+      : setNumOwnSelected(numOwnSelected - 1);
     setUserCards(cards);
   };
 
@@ -50,6 +66,9 @@ const ProposeTrade = () => {
     otherCards?.forEach((c) => {
       cards.push(c.card.id === cardId ? { ...c, selected: !c.selected } : c);
     });
+    otherCards?.find((c) => c.card.id === cardId)?.selected
+      ? setNumOtherSelected(numOtherSelected + 1)
+      : setNumOtherSelected(numOtherSelected - 1);
     setOtherCards(cards);
   };
 
@@ -86,54 +105,69 @@ const ProposeTrade = () => {
     getOtherCardData();
   }, [otherId]);
 
-  return (
-    <div className="ProposeTrade__cardscontainer">
-      {user && (
-        <Button
-          className={"ProposeTrade__propose"}
-          onClick={() => submitTradeProposal()}
+  const displayCards = (tradeCard: TradableCard) => {
+    return (
+      <div className="ProposeTrade__cardbutton">
+        <Card key={tradeCard.card.id} {...tradeCard.card} />
+        <button
+          className={`ProposeTrade__button ${
+            tradeCard.selected
+              ? "ProposeTrade__removebutton"
+              : "ProposeTrade__selectbutton"
+          }`}
+          onClick={() =>
+            tradeCard.card.ownerId === user?.id
+              ? toggleSelectedUser(tradeCard.card.id)
+              : toggleSelectedOther(tradeCard.card.id)
+          }
         >
-          Propose
-        </Button>
-      )}
-      {errorText !== "" ? (
-        <p className="ProposeTrade_error">{errorText}</p>
-      ) : (
-        <></>
-      )}
-      <div className="ProposeTrade__cards">
-        {userCards?.map((tradeCard) => (
-          <div className="ProposeTrade_cardbutton">
-            <Card key={tradeCard.card.id} {...tradeCard.card} />
-            <Button
-              className={
-                tradeCard.selected
-                  ? "ProposeTrade__deselectbutton"
-                  : "ProposeTrade__selectbutton"
-              }
-              onClick={() => toggleSelectedUser(tradeCard.card.id)}
-            >
-              {tradeCard.selected ? "Deselect" : "Select"}
-            </Button>
-          </div>
-        ))}
+          {tradeCard.selected ? "Remove" : "Select"}
+        </button>
       </div>
-      <div className="ProposeTrade__cards">
-        {otherCards?.map((tradeCard) => (
-          <div className="ProposeTrade_cardbutton">
-            <Card key={tradeCard.card.id} {...tradeCard.card} />
-            <Button
-              className={
-                tradeCard.selected
-                  ? "ProposeTrade__deselectbutton"
-                  : "ProposeTrade__selectbutton"
-              }
-              onClick={() => toggleSelectedOther(tradeCard.card.id)}
-            >
-              {tradeCard.selected ? "Deselect" : "Select"}
-            </Button>
-          </div>
-        ))}
+    );
+  };
+
+  return (
+    <div>
+      <div className="ProposeTrade__nav">
+        <span
+          className={`ProposeTrade__tab ${
+            showOwnCards ? "ProposeTrade__tab-selected" : ""
+          }`}
+          onClick={() => setShowOwnCards(true)}
+        >
+          Your Cards
+        </span>
+        <span
+          className={`ProposeTrade__tab ${
+            showOwnCards ? "" : "ProposeTrade__tab-selected"
+          }`}
+          onClick={() => setShowOwnCards(false)}
+        >
+          {`${otherUser?.username}'s Cards`}
+        </span>
+        {user && (
+          <button
+            className={"App__Button ProposeTrade__propose"}
+            onClick={() => submitTradeProposal()}
+            disabled={numOwnSelected == 0 || numOtherSelected == 0}
+          >
+            Propose
+          </button>
+        )}
+      </div>
+      <div className="ProposeTrade__cardscontainer">
+        {errorText !== "" ? (
+          <p className="ProposeTrade_error">{errorText}</p>
+        ) : (
+          <></>
+        )}
+
+        <div id="ProposeTrade__container">
+          {showOwnCards
+            ? userCards?.map((tradeCard) => displayCards(tradeCard))
+            : otherCards?.map((tradeCard) => displayCards(tradeCard))}
+        </div>
       </div>
     </div>
   );
