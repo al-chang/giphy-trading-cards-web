@@ -50,16 +50,23 @@ const BrowsePacks = () => {
     <div id="BrowsePacks__container">
       <div id="BrowsePacks__header">
         <h1 id="BrowsePacks__title">Packs</h1>
-        {user && (
-          <div id="BrowsePacks__coins">
-            <img
-              src="https://media4.giphy.com/media/TiDqYW1SQiA38RgoyY/giphy.gif?cid=ecf05e479p6ao7qowd9uyo2ezjzk3dif50b9r0myvr80zviz&rid=giphy.gif&ct=g"
-              alt="coin"
-              id="BrowsePacks__coin_image"
-            />
-            {coins}
-          </div>
-        )}
+        <div id="BrowsePacks__right_side">
+          {coins >= 10000 && (
+            <Link className="App__Button" to="/cards/custom">
+              Buy Custom Card
+            </Link>
+          )}
+          {user && (
+            <div id="BrowsePacks__coins">
+              <img
+                src="https://media4.giphy.com/media/TiDqYW1SQiA38RgoyY/giphy.gif?cid=ecf05e479p6ao7qowd9uyo2ezjzk3dif50b9r0myvr80zviz&rid=giphy.gif&ct=g"
+                alt="coin"
+                id="BrowsePacks__coin_image"
+              />
+              {coins}
+            </div>
+          )}
+        </div>
       </div>
       {user?.role === Role.ADMIN && (
         <Link id="BrowsePacks__add_button" to="/packs/create">

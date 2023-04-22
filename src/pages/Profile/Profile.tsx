@@ -92,7 +92,12 @@ const Profile = () => {
           </button>
         </div>
       </Modal>
-      <h1>Profile</h1>
+      <h1>Profile</h1>{" "}
+      {!id && user && user.id === profile?.id && (
+        <Link className="App__Button" to={`/profile/edit`}>
+          Edit
+        </Link>
+      )}
       {(user?.role === Role.ADMIN || !id) && (
         <p>
           <strong>Email:</strong> {profile?.email}
