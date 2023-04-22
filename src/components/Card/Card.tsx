@@ -6,7 +6,7 @@ import "./index.css";
 const Card: React.FC<TCard> = ({ id, name, gif }) => {
   return (
     <Link to={`/card/${id}`}>
-      <div className="Card__background">
+      <div className="Card__background Card__bordergradient">
         <div
           className="Card__container"
           style={{ backgroundImage: `url(${gif})` }}
