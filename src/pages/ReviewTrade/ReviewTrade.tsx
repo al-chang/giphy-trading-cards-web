@@ -8,7 +8,7 @@ import {
 } from "../../services/tradeService";
 import { Trade } from "../Trades/Trades";
 import { getUserProfile } from "../../services/userService";
-import { Profile } from "../Profile/Profile";
+import { TProfile } from "../Profile/Profile";
 import { User } from "../../types";
 import { getCard } from "../../services/cardService";
 import { useUserContext } from "../../hooks/useUser";
@@ -20,8 +20,8 @@ import "./index.css";
 
 const ReviewTrade = () => {
   const [trade, setTrade] = useState<TPendingTrade | null>(null);
-  const [sender, setSender] = useState<User | null>(null);
-  const [receiver, setReceiver] = useState<User | null>(null);
+  const [sender, setSender] = useState<TProfile | null>(null);
+  const [receiver, setReceiver] = useState<TProfile | null>(null);
   const { id } = useParams();
   const { user } = useUserContext();
   const [responseMessage, setResponseMessage] = useState<String | null>();
@@ -63,19 +63,12 @@ const ReviewTrade = () => {
     ): Promise<User | undefined> => {
       if (!id) return undefined;
       const profile = await getUserProfile(id);
-      const userObj = {
-        id: profile.id,
-        email: profile.email || "",
-        username: profile.username,
-        role: profile.role,
-      };
-      sender ? setSender(userObj) : setReceiver(userObj);
+      sender ? setSender(profile) : setReceiver(profile);
     };
 
     getTradeData();
     getUserData(trade?.sender.id, true);
     getUserData(trade?.receiver.id, false);
-    console.log(sender?.username);
   }, [id, user]);
 
   return (
