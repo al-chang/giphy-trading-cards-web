@@ -30,8 +30,9 @@ const Home = () => {
 
   return (
     <div>
-      {user
-        ? feed?.map((item) => {
+      {user ? (
+        feed && feed.length > 0 ? (
+          feed.map((item) => {
             if (isTCardFeed(item)) {
               return (
                 <div key={item.id} className="Home__Card">
@@ -46,11 +47,16 @@ const Home = () => {
               return <TradePreviewFeed key={item.id} {...item} />;
             }
           })
-        : cards?.map((card) => (
-            <div key={card.id} className="Home__Card">
-              <Card {...card} />
-            </div>
-          ))}
+        ) : (
+          <h2>Your Feed is Empty!</h2>
+        )
+      ) : (
+        cards?.map((card) => (
+          <div key={card.id} className="Home__Card">
+            <Card {...card} />
+          </div>
+        ))
+      )}
     </div>
   );
 };

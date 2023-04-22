@@ -12,7 +12,65 @@
   margin-bottom: 20px;
 }
 
+.TradePreview__receiver_cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .TradePreview__card {
   width: 20%;
   object-fit: contain;
+}
+
+.TradePreview__background {
+  border-radius: 20px;
+  border: solid rgb(0, 179, 255) 5px;
+  padding: 8px;
+  margin: 8px;
+}
+
+.TradePreview__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.TradePreview__view {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.TradePreview__view_link {
+  text-decoration: none;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #d25359,
+    #d0922b 20.31%,
+    #f9d651 39.06%,
+    #6bdc85 57.81%,
+    #498ff7 78.65%,
+    #716fd5
+  );
+  background-size: 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient 5s ease infinite;
+  font-weight: bold;
+  font-size: large;
+}
+
+.TradePreview__ACCEPTED {
+  color: #6bdc85;
+}
+
+.TradePreview__REJECTED {
+  color: #d25359;
+}
+
+.TradePreview__PENDING {
+  color: #f9d651;
 }
