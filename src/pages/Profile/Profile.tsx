@@ -128,6 +128,8 @@ const Profile = () => {
           {isFollowing ? "Unfollow" : "Follow"}
         </button>
       )}
+      <br></br>
+      <Link to={`/propose/${profile?.id}`}>Propose Trade</Link>
     </div>
   );
 };
