@@ -63,3 +63,9 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
+
+#BrowsePacks__right_side {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
