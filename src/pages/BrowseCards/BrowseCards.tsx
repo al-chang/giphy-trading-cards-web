@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCards, getPack } from "../../services/cardService";
 import Card from "../../components/Card/Card";
 
 import "./index.css";
 import useFilter from "../../hooks/useFilter";
 import { getUserProfile } from "../../services/userService";
+import { useUserContext } from "../../hooks/useUser";
 
 export type TCard = {
   id: string;
@@ -23,6 +24,7 @@ const BrowseCards = () => {
   const [previousPage, setPreviousPage] = useState<number | null>(null);
   const [packName, setPackName] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState<string | null>(null);
+  const { user } = useUserContext();
 
   const { filterValues, handleFilterChange, paramValues } = useFilter({
     ownerId: "",
@@ -77,6 +79,8 @@ const BrowseCards = () => {
     setPackName(null);
   }, [filterValues]);
 
+  useEffect(() => {}, [user]);
+
   return (
     <div>
       <div id="BrowseCards__filters">
@@ -120,10 +124,11 @@ const BrowseCards = () => {
           <h2>Found in {packName}</h2>
         </div>
       )}
-      {paramValues.get("ownerId") && (
+      {paramValues.get("ownerId") && user?.username !== ownerName && (
         <div id="BrowseCards__ownerName">
           <h2>{ownerName}'s Cards</h2>
           <button
+            className="App__Button"
             onClick={() => navigate(`/propose/${paramValues.get("ownerId")}`)}
           >
             Propose Trade
