@@ -75,3 +75,18 @@ export const updatePack = async ({
   });
   return data;
 };
+
+export const getCandidateCards = async (tag: string) => {
+  const { data } = await api.get(`/custom/${CARD_URL}?tag=${tag}`);
+  return data;
+};
+
+export const createCardFromCandidate = async ({
+  gif,
+  source,
+}: {
+  gif: string;
+  source: string;
+}) => {
+  await api.post(`/custom/${CARD_URL}`, { gif, source });
+};
