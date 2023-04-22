@@ -31,6 +31,7 @@ const ReviewTrade = () => {
 
     const response = await acceptTrade(id);
     setResponseMessage(response.message);
+    navigate("/trades");
   };
 
   const onRejectTrade = async () => {
@@ -40,6 +41,7 @@ const ReviewTrade = () => {
     }
     const response = await acceptTrade(id);
     setResponseMessage(response.message);
+    navigate("/trades");
   };
 
   useEffect(() => {

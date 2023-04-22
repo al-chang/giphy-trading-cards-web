@@ -37,7 +37,9 @@ const TradePreview: React.FC<TTradeFeed> = ({
 
       <div className="TradePreview__cards">
         <div className="TradePreview__user_cards">
-          <p>{`${sender.username} sends:`}</p>
+          <p>{`${receiver.username} ${
+            status === "ACCEPTED" ? "received" : "sends"
+          }:`}</p>
           <div className="TradePreview__sender_cards">
             {cards
               .filter(({ card }) => card.ownerId === sender.id)
@@ -51,7 +53,9 @@ const TradePreview: React.FC<TTradeFeed> = ({
 
         <div className="TradePreview__receiver_cards">
           <div className="TradePreview__user_cards">
-            <p>{`${receiver.username} sends:`}</p>
+            <p>{`${receiver.username} ${
+              status === "ACCEPTED" ? "received" : "sends"
+            }:`}</p>
             {cards
               .filter(({ card }) => card.ownerId === receiver.id)
               .map(({ card }) => (
