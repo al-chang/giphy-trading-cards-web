@@ -29,9 +29,11 @@ const TradePreview: React.FC<TTradeFeed> = ({
             </span>
           </div>
         </div>
-        <Link className="TradePreview__view" to={`/trade/${id}`}>
-          <div className="TradePreview__view_link">Review Trade</div>
-        </Link>
+        {status === "PENDING" && (
+          <Link className="TradePreview__view" to={`/trade/${id}`}>
+            <div className="TradePreview__view_link">Review Trade</div>
+          </Link>
+        )}
       </div>
 
       <div className="TradePreview__cards">
