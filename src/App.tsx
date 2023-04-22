@@ -11,8 +11,12 @@ import BrowsePacks from "./pages/BrowsePacks/BrowsePacks";
 import ViewCard from "./pages/ViewCard/ViewCard";
 import CreatePack from "./pages/CreatePack/CreatePack";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
+import ProposeTrade from "./pages/ProposeTrade/ProposeTrade";
+import Trades from "./pages/Trades/Trades";
+import ReviewTrade from "./pages/ReviewTrade/ReviewTrade";
 import Coins from "./pages/Coins/Coins";
 import BrowseUsers from "./pages/BrowseUsers/BrowseUsers";
+
 
 function App() {
   const permissionLevels = {
@@ -34,6 +38,9 @@ function App() {
           <Route path="/cards" element={<BrowseCards />} />
           <Route path="/card/:id" element={<ViewCard />} />
           <Route path="/packs" element={<BrowsePacks />} />
+          <Route path="/trades" element={<Trades />}></Route>
+          <Route path="/propose/:otherId" element={<ProposeTrade />} />
+          <Route path="/trade/:id" element={<ReviewTrade />} />
           <Route
             path="/coins"
             element={

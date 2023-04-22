@@ -123,6 +123,11 @@ const BrowseCards = () => {
       {paramValues.get("ownerId") && (
         <div id="BrowseCards__ownerName">
           <h2>{ownerName}'s Cards</h2>
+          <button
+            onClick={() => navigate(`/propose/${paramValues.get("ownerId")}`)}
+          >
+            Propose Trade
+          </button>
         </div>
       )}
       <div id="BrowseCards__container">
