@@ -15,7 +15,7 @@ const TradePreview: React.FC<TTradeFeed> = ({
   const { user } = useUserContext();
 
   return (
-    <div className="TradePreview__background">
+    <div className="TradePreview__bordergradient TradePreview__background">
       <div className="TradePreview__info">
         <div>
           {sender.id === user?.id ? "You" : sender.username} sent a trade to{" "}
@@ -36,11 +36,11 @@ const TradePreview: React.FC<TTradeFeed> = ({
       </div>
 
       <div className="TradePreview__cards">
-        <div className="TradePreview__user_cards">
+        <div className="TradePreview__cardsname">
           <p>{`${receiver.username} ${
             status === "ACCEPTED" ? "received" : "sends"
           }:`}</p>
-          <div className="TradePreview__sender_cards">
+          <div className="TradePreview__user_cards">
             {cards
               .filter(({ card }) => card.ownerId === sender.id)
               .map(({ card }) => (
@@ -51,11 +51,11 @@ const TradePreview: React.FC<TTradeFeed> = ({
           </div>
         </div>
 
-        <div className="TradePreview__receiver_cards">
+        <div className="TradePreview__cardsname">
+          <p>{`${receiver.username} ${
+            status === "ACCEPTED" ? "received" : "sends"
+          }:`}</p>
           <div className="TradePreview__user_cards">
-            <p>{`${receiver.username} ${
-              status === "ACCEPTED" ? "received" : "sends"
-            }:`}</p>
             {cards
               .filter(({ card }) => card.ownerId === receiver.id)
               .map(({ card }) => (

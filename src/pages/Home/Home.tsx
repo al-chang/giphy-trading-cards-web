@@ -44,7 +44,11 @@ const Home = () => {
                 </div>
               );
             } else {
-              return <TradePreviewFeed key={item.id} {...item} />;
+              return (
+                <div className="Home__Card">
+                  <TradePreviewFeed key={item.id} {...item} />
+                </div>
+              );
             }
           })
         ) : (
