@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../hooks/useUser";
@@ -20,7 +19,9 @@ const TradePreview = (trade: Trade) => {
       }: ${
         user?.id === trade.sender.id ? trade.receiver.email : trade.sender.email
       }`}</div>
-      <Button onClick={navigateReviewTrade}>View</Button>
+      <button className="App__Button" onClick={navigateReviewTrade}>
+        View
+      </button>
     </div>
   );
 };
