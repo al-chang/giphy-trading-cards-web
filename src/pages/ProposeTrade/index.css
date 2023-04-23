@@ -1,16 +1,3 @@
-.ProposeTrade__cardscontainer {
-}
-
-.ProposeTrade__deselectbutton {
-  width: 100%;
-  background-color: red;
-}
-
-.ProposeTrade__selectbutton {
-  width: 100%;
-  background-color: green;
-}
-
 .ProposeTrade_cardbutton {
   padding: 5px;
   margin-bottom: 20px;

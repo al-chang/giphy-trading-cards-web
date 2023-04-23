@@ -30,8 +30,7 @@ const Profile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [coinsToAdd, setCoinsToAdd] = useState(0);
-
-  useEffect(() => {}, [profile]);
+  const [madeAdmin, setMadeAdmin] = useState(false);
 
   const { user, loading } = useUserContext();
   let { id } = useParams();
@@ -56,7 +55,8 @@ const Profile = () => {
   const makeAdmin = async () => {
     if (!profile) return;
     if (user?.role === "ADMIN" || profile?.role !== "ADMIN") {
-      updateUserRole(profile.id, Role.ADMIN);
+      await updateUserRole(profile.id, Role.ADMIN);
+      setMadeAdmin(true);
     }
   };
 
@@ -80,7 +80,7 @@ const Profile = () => {
       setIsFollowing(profile.isFollowing);
     };
     getUserData();
-  }, [id, user]);
+  }, [id, user, profile, madeAdmin]);
 
   return (
     <div>

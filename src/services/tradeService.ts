@@ -1,5 +1,6 @@
 import { TCard } from "../pages/BrowseCards/BrowseCards";
 import api from "./api";
+import { TTradeFeed } from "./feedService";
 
 const TRADE_URL = "/trade";
 
@@ -21,12 +22,12 @@ export type TPendingTrade = {
 };
 
 export const getPendingTrades = async () => {
-  const response = await api.get(TRADE_URL);
+  const response = await api.get<TTradeFeed[]>(TRADE_URL);
   return response.data;
 };
 
 export const getPendingTrade = async (tradeId: string) => {
-  const response = await api.get<TPendingTrade>(`${TRADE_URL}/${tradeId}`);
+  const response = await api.get<TTradeFeed>(`${TRADE_URL}/${tradeId}`);
   return response.data;
 };
 
