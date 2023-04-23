@@ -35,7 +35,7 @@ const ViewCard = () => {
     };
     getCardData();
     card && setCardName(card?.name);
-  }, [id]);
+  }, [id, card]);
 
   const toggleEditing = () => {
     setEditing(!editing);
@@ -56,7 +56,15 @@ const ViewCard = () => {
     <div id="ViewCard__container">
       <img id="ViewCard__gif" src={card?.gif} alt="selected image" />
       <div id="ViewCard__metadata">
-        {!editing && <h2>{cardName}</h2>}
+        {editing ? (
+          <h2 className="ViewCard__name ViewCard__bordergradientbottom">
+            {newName}
+          </h2>
+        ) : (
+          <h2 className="ViewCard__name ViewCard__bordergradientbottom">
+            {cardName}
+          </h2>
+        )}
         {card?.ownerId === user?.id ? (
           editing ? (
             <div>
@@ -76,45 +84,64 @@ const ViewCard = () => {
               </button>
             </div>
           ) : (
-            <div>
+            <span>
               <button
                 className="App__Button"
+                id="ViewCard__editbutton"
                 onClick={() => setEditing(!editing)}
               >
                 Edit Name
               </button>
-            </div>
+            </span>
           )
         ) : (
           <></>
         )}
 
-        <ul>
-          <li>
-            <strong>Owner:</strong>{" "}
-            <Link
-              to={
-                card?.ownerId === user?.id
-                  ? `/profile`
-                  : `/profile/${card?.ownerId}`
-              }
-            >
-              {card?.owner?.username}
+        <table id="ViewCard__table">
+          <tbody>
+            <tr>
+              <td>
+                <strong>Owner:</strong>{" "}
+              </td>
+              <td>
+                <Link
+                  className="ViewCard__link"
+                  to={
+                    card?.ownerId === user?.id
+                      ? `/profile`
+                      : `/profile/${card?.ownerId}`
+                  }
+                >
+                  {card?.owner?.username}
+                </Link>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {" "}
+                <strong>Pack:</strong>
+              </td>
+              <td>{card?.pack?.name || "Custom"}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Packed On:</strong>{" "}
+              </td>
+              <td>
+                {card?.createdAt && new Date(card?.createdAt).toDateString()}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {card?.gif && (
+          <div>
+            <Link className="ViewCard__link" to={card?.gif}>
+              Link to GIF
             </Link>
-          </li>
-          <li>
-            <strong>From Pack:</strong> {card?.pack?.name || "Custom"}
-          </li>
-          <li>
-            <strong>Packed:</strong>{" "}
-            {card?.createdAt && new Date(card?.createdAt).toDateString()}
-          </li>
-          {card?.gif && (
-            <li>
-              <Link to={card?.gif}>Link to GIF</Link>
-            </li>
-          )}
-        </ul>
+          </div>
+        )}
       </div>
     </div>
   );
