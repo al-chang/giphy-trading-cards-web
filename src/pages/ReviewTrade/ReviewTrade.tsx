@@ -78,7 +78,9 @@ const ReviewTrade = () => {
 
   return authorized ? (
     <div className={"ReviewTrade__background"}>
-      <h2>{`${sender?.username} Receives:`}</h2>
+      <h2>{`${
+        sender?.id === user?.id ? "You Receive" : `${sender?.username} Receives`
+      }:`}</h2>
       <div className={"ReviewTrade__container"}>
         {trade?.cards
           ?.filter((c) => c.card.ownerId === trade.receiver.id)
@@ -86,7 +88,11 @@ const ReviewTrade = () => {
             return <Card key={c.card.id} {...c.card} />;
           })}
       </div>
-      <h2>{`${receiver?.username} Receives:`}</h2>
+      <h2>{`${
+        receiver?.id === user?.id
+          ? "You Receive"
+          : `${receiver?.username} Receives`
+      }:`}</h2>
       <div className={"ReviewTrade__container"}>
         {trade?.cards
           ?.filter((c) => c.card.ownerId === trade.sender.id)
@@ -96,11 +102,17 @@ const ReviewTrade = () => {
       </div>
       <div className="ReviewTrade__buttons">
         {user?.id === receiver?.id && (
-          <button className="App__Button" onClick={onAcceptTrade}>
+          <button
+            className="App__Button ReviewTrade__buttons"
+            onClick={onAcceptTrade}
+          >
             Accept
           </button>
         )}
-        <button className="App__Button" onClick={onRejectTrade}>
+        <button
+          className="App__Button ReviewTrade__buttons"
+          onClick={onRejectTrade}
+        >
           Reject
         </button>
         {responseMessage && responseMessage !== "" && <p>{responseMessage}</p>}

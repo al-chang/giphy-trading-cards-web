@@ -38,14 +38,15 @@ const CreatePack = () => {
         <label htmlFor="name">Name</label>
         <input
           id="name"
+          className="App__text_input CreatePack__input"
           onChange={(e) =>
             setNewPack((_newPack) => ({ ..._newPack, name: e.target.value }))
           }
         />
         <label htmlFor="price">Price</label>
         <input
-          id="price"
           type="number"
+          className="App__text_input CreatePack__input"
           defaultValue={1}
           onChange={(e) =>
             setNewPack((_newPack) => ({
@@ -55,12 +56,22 @@ const CreatePack = () => {
           }
         />
 
-        <button type="submit">Create Pack</button>
+        <button
+          id="CreatePack__Button"
+          className={"App__Button"}
+          type="submit"
+          disabled={
+            newPack.name === "" || newPack.price <= 0 || tags.length === 0
+          }
+        >
+          Create Pack
+        </button>
         <p id="CreatePack__error">{error}</p>
       </form>
       <label htmlFor="tags">Tags</label>
       <input
-        id="tags"
+        id="CreatePack__tags"
+        className="App__text_input CreatePack__input"
         onChange={(e) => setNewTag(e.target.value)}
         value={newTag}
         onKeyUp={(e) => {
@@ -71,11 +82,13 @@ const CreatePack = () => {
           }
         }}
       />
-      <div className="CreatePack__tags">
+      <div id="CreatePack__tags">
         {tags.map((tag) => (
           <div key={Math.random()} className="CreatePack__tag">
             {tag}
             <button
+              id="CreatePack__TagButton"
+              className="App__Button"
               onClick={() => setTags(tags.filter((_tag) => tag !== _tag))}
             >
               X
