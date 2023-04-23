@@ -6,9 +6,11 @@ import {
   unfollowUser,
   followUser,
   addCoins,
+  updateUserRole,
 } from "../../services/userService";
 import { Role } from "../../types";
 import Modal from "../../components/Modal/Modal";
+import "./index.css";
 
 export type TProfile = {
   id: string;
@@ -29,6 +31,8 @@ const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [coinsToAdd, setCoinsToAdd] = useState(0);
 
+  useEffect(() => {}, [profile]);
+
   const { user, loading } = useUserContext();
   let { id } = useParams();
   const navigate = useNavigate();
@@ -46,6 +50,13 @@ const Profile = () => {
       await followUser(id);
       setProfile({ ...profile, followerCount: profile.followerCount + 1 });
       setIsFollowing(true);
+    }
+  };
+
+  const makeAdmin = async () => {
+    if (!profile) return;
+    if (user?.role === "ADMIN" || profile?.role !== "ADMIN") {
+      updateUserRole(profile.id, Role.ADMIN);
     }
   };
 
@@ -80,9 +91,11 @@ const Profile = () => {
             id="coins"
             type="number"
             value={coinsToAdd}
+            className="App__text_input"
             onChange={(e) => setCoinsToAdd(parseInt(e.target.value))}
           />
           <button
+            className="App__Button"
             onClick={async () => {
               await addCoins(coinsToAdd, profile?.id!);
               setProfile({ ...profile!, coins: profile!.coins + coinsToAdd });
@@ -93,11 +106,19 @@ const Profile = () => {
         </div>
       </Modal>
       <h1>Profile</h1>{" "}
-      {!id && user && user.id === profile?.id && (
+      {!id && user && user.id === profile?.id && profile?.role !== "ADMIN" && (
         <Link className="App__Button" to={`/profile/edit`}>
           Edit
         </Link>
       )}
+      {id &&
+        user &&
+        user.role === Role.ADMIN &&
+        profile?.role === Role.USER && (
+          <button className="App__Button" onClick={makeAdmin}>
+            Make Admin
+          </button>
+        )}
       {(user?.role === Role.ADMIN || !id) && (
         <p>
           <strong>Email:</strong> {profile?.email}
@@ -112,7 +133,12 @@ const Profile = () => {
       <p>
         <strong>Coins:</strong> {profile?.coins}{" "}
         {user?.role === Role.ADMIN && (
-          <button onClick={() => setIsModalOpen(true)}>+</button>
+          <button
+            className={"Profile__addbutton"}
+            onClick={() => setIsModalOpen(true)}
+          >
+            +
+          </button>
         )}
       </p>
       <p>
@@ -125,16 +151,24 @@ const Profile = () => {
       <p>
         <strong>Following:</strong> {profile?.followingCount}
       </p>
-      <Link to={`/cards?ownerId=${profile?.id}`}>
-        View {profile?.username}'s Cards
-      </Link>
-      {id && user?.id !== id && (
-        <button onClick={updateFollow}>
-          {isFollowing ? "Unfollow" : "Follow"}
-        </button>
+      {user && (
+        <div>
+          {id && user?.id !== id && (
+            <button className="App__Button" onClick={updateFollow}>
+              {isFollowing ? "Unfollow" : "Follow"}
+            </button>
+          )}
+          <Link className="App__Button" to={`/cards?ownerId=${profile?.id}`}>
+            View {profile?.id === user?.id ? "Your" : profile?.username + "'s"}{" "}
+            Cards
+          </Link>
+          {user?.id !== profile?.id && (
+            <Link className="App__Button" to={`/propose/${profile?.id}`}>
+              Propose Trade
+            </Link>
+          )}
+        </div>
       )}
-      <br></br>
-      <Link to={`/propose/${profile?.id}`}>Propose Trade</Link>
     </div>
   );
 };

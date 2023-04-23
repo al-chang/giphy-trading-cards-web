@@ -1,0 +1,8 @@
+.Profile__addbutton {
+  background-color: rgb(var(--background));
+  color: rgb(var(--primary-font));
+  border: 1px solid rgb(var(--primary-font));
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
