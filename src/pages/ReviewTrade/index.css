@@ -6,5 +6,23 @@
 }
 
 .ReviewTrade__buttons {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .ReviewTrade__container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .ReviewTrade__container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.ReviewTrade__buttons {
+  margin: 8px;
 }
