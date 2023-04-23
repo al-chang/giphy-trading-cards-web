@@ -1,6 +1,6 @@
 import { TUser } from "../pages/BrowseUsers/BrowseUsers";
 import { TProfile } from "../pages/Profile/Profile";
-import { Paginated } from "../types";
+import { Paginated, Role } from "../types";
 import api from "./api";
 
 const USER_URL = "/users";
@@ -64,9 +64,15 @@ export const updateUserPassword = async (
   userId: string,
   updatedUserPasword: string
 ) => {
-  console.log(updatedUserPasword);
   const response = await api.put(`${USER_URL}/${userId}/edit/password`, {
     updatedUserPasword,
+  });
+  return response;
+};
+
+export const updateUserRole = async (userId: string, updatedUserRole: Role) => {
+  const response = await api.put(`${USER_URL}/${userId}/edit/role`, {
+    updatedUserRole,
   });
   return response;
 };
