@@ -32,25 +32,35 @@ const Trades = () => {
 
   return (
     <>
-      <h1>Pending Trades:</h1>
-      {pendingTrades?.find((t) => t.receiverId === user?.id) && (
-        <h2>Received:</h2>
+      {pendingTrades?.find(
+        (t) => t.receiverId === user?.id || t.senderId === user?.id
+      ) ? (
+        <div>
+          <h1>Pending Trades:</h1>
+          {pendingTrades?.find((t) => t.receiverId === user?.id) && (
+            <h2>Received:</h2>
+          )}
+          {pendingTrades
+            ?.filter((t) => t.receiver.id === user?.id)
+            .map((trade) => (
+              <div className={"Trades__Preview"}>
+                <TradePreviewFeed key={trade.id} {...trade} />
+              </div>
+            ))}
+          {pendingTrades?.find((t) => t.senderId === user?.id) && (
+            <h2>Sent:</h2>
+          )}
+          {pendingTrades
+            ?.filter((t) => t.sender.id === user?.id)
+            .map((trade) => (
+              <div className={"Trades__Preview"}>
+                <TradePreviewFeed key={trade.id} {...trade} />
+              </div>
+            ))}
+        </div>
+      ) : (
+        <h1>You have no pending trades!</h1>
       )}
-      {pendingTrades
-        ?.filter((t) => t.receiver.id === user?.id)
-        .map((trade) => (
-          <div className={"Trades__Preview"}>
-            <TradePreviewFeed key={trade.id} {...trade} />
-          </div>
-        ))}
-      {pendingTrades?.find((t) => t.senderId === user?.id) && <h2>Sent:</h2>}
-      {pendingTrades
-        ?.filter((t) => t.sender.id === user?.id)
-        .map((trade) => (
-          <div className={"Trades__Preview"}>
-            <TradePreviewFeed key={trade.id} {...trade} />
-          </div>
-        ))}
     </>
   );
 };

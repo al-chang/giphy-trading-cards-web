@@ -52,7 +52,12 @@ const NagivationBar = () => {
 
   return (
     <nav id="NavBar__container">
-      <img id="NavBar__logo" src="/giphymon.png" alt="GIPHYmon logo" />
+      <img
+        id="NavBar__logo"
+        src="/giphymon.png"
+        alt="GIPHYmon logo"
+        onClick={() => navigate("/")}
+      />
       <ul id="NavBar__links_container">
         {links.map((link) => {
           if (!link) return null;
