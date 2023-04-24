@@ -5,6 +5,13 @@
   padding: 20px;
 }
 
+@media screen and (max-width: 600px) {
+  #BrowsePacks__header {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 #BrowsePacks__view_packs {
   display: grid;
   grid-template-columns: 1fr;

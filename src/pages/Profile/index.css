@@ -6,3 +6,58 @@
   padding: 5px;
   cursor: pointer;
 }
+
+.Profile__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Profile__outline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.Profile__bordergradientbottom {
+  border-bottom: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+  border-image-source: linear-gradient(
+    45deg,
+    rgb(0, 204, 255),
+    rgb(153, 51, 255) 31%,
+    rgb(230, 70, 182) 52%,
+    rgb(255, 249, 170) 77%,
+    rgb(0, 255, 153),
+    rgb(0, 204, 255)
+  );
+}
+
+.Profile__name {
+  text-align: center;
+}
+
+.Profile__top_button {
+  max-width: 100px;
+  text-align: center;
+}
+
+.Profile__buttons {
+  margin-top: 16px;
+}
+
+.EditProfile__title {
+  text-align: center;
+}
+
+.EditProfile__edit_item {
+  margin: 10px;
+}

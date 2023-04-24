@@ -34,6 +34,9 @@ export type TTradeFeed = {
       id: string;
       gif: string;
       ownerId: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
     };
   }[];
 };

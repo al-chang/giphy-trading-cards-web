@@ -51,11 +51,9 @@ const BrowsePacks = () => {
       <div id="BrowsePacks__header">
         <h1 id="BrowsePacks__title">Packs</h1>
         <div id="BrowsePacks__right_side">
-          {coins >= 10000 && (
-            <Link className="App__Button" to="/cards/custom">
-              Buy Custom Card
-            </Link>
-          )}
+          <Link className="App__Button" to="/cards/custom">
+            {coins >= 10000 ? "Buy Custom Card" : "Search Cards"}
+          </Link>
           {user && (
             <div id="BrowsePacks__coins">
               <img

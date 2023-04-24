@@ -13,6 +13,12 @@
   }
 }
 
+@media (max-width: 768px) {
+  #NavBar__container {
+    margin-bottom: 25px;
+  }
+}
+
 #NavBar__logo {
   display: none;
   width: 100px;

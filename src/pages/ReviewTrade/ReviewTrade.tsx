@@ -12,9 +12,10 @@ import { User } from "../../types";
 import { useUserContext } from "../../hooks/useUser";
 
 import "./index.css";
+import { TTradeFeed } from "../../services/feedService";
 
 const ReviewTrade = () => {
-  const [trade, setTrade] = useState<TPendingTrade | null>(null);
+  const [trade, setTrade] = useState<TTradeFeed | null>(null);
   const [sender, setSender] = useState<TProfile | null>(null);
   const [receiver, setReceiver] = useState<TProfile | null>(null);
   const { id } = useParams();

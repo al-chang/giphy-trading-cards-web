@@ -9,6 +9,8 @@ import "./index.css";
 import "../../components/Card/index.css";
 
 import useFilter from "../../hooks/useFilter";
+import { useUserContext } from "../../hooks/useUser";
+import { getCoins } from "../../services/userService";
 
 export type TCard = {
   id: string;
@@ -24,6 +26,19 @@ const BrowseCards = () => {
   const [cards, setCards] = useState<{ gif: string; source: string }[] | null>(
     null
   );
+  const [coins, setCoins] = useState<number>(0);
+
+  const { user, loading } = useUserContext();
+
+  useEffect(() => {
+    const loadCoins = async () => {
+      const _coins = await getCoins();
+      setCoins(_coins.coins);
+    };
+    if (user && !loading) {
+      loadCoins();
+    }
+  }, [user, loading]);
 
   const { filterValues, handleFilterChange, paramValues } = useFilter({
     term: "",
@@ -86,13 +101,15 @@ const BrowseCards = () => {
                 style={{ backgroundImage: `url(${card.gif})` }}
               ></div>
             </div>
-            <button
-              className="App__Button"
-              style={{ width: "100%" }}
-              onClick={() => purchaseCard(card.gif, card.source)}
-            >
-              Purchase (10,000 coins)
-            </button>
+            {coins >= 10000 && (
+              <button
+                className="App__Button"
+                style={{ width: "100%" }}
+                onClick={() => purchaseCard(card.gif, card.source)}
+              >
+                Purchase (10,000 coins)
+              </button>
+            )}
           </div>
         ))}
       </div>

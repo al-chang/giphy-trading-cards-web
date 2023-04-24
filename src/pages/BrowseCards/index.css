@@ -29,3 +29,16 @@
     justify-content: space-evenly;
   }
 }
+
+#BrowseCards__control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.BrowseCards__Button {
+  width: 100px;
+  text-align: center;
+  margin: 10px;
+}

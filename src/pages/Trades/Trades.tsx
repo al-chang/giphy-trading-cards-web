@@ -6,6 +6,8 @@ import { TCard } from "../BrowseCards/BrowseCards";
 import { TTradeFeed } from "../../services/feedService";
 import TradePreviewFeed from "../../components/TradePreviewFeed/TradePreviewFeed";
 
+import "./index.css";
+
 export type Trade = {
   id: string;
   sender: User;
@@ -31,20 +33,23 @@ const Trades = () => {
   return (
     <>
       <h1>Pending Trades:</h1>
-      <h2>Received:</h2>
+      {pendingTrades?.find((t) => t.receiverId === user?.id) && (
+        <h2>Received:</h2>
+      )}
       {pendingTrades
         ?.filter((t) => t.receiver.id === user?.id)
         .map((trade) => (
-          <div>
-            <h3>From {trade.sender.username}:</h3>
+          <div className={"Trades__Preview"}>
             <TradePreviewFeed key={trade.id} {...trade} />
           </div>
         ))}
-      <h2>Sent:</h2>
+      {pendingTrades?.find((t) => t.senderId === user?.id) && <h2>Sent:</h2>}
       {pendingTrades
         ?.filter((t) => t.sender.id === user?.id)
         .map((trade) => (
-          <TradePreviewFeed key={trade.id} {...trade} />
+          <div className={"Trades__Preview"}>
+            <TradePreviewFeed key={trade.id} {...trade} />
+          </div>
         ))}
     </>
   );
