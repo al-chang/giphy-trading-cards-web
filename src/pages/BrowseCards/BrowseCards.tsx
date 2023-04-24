@@ -143,7 +143,7 @@ const BrowseCards = () => {
       <div id="BrowseCards__control">
         {previousPage && (
           <button
-            className="App__Button"
+            className="App__Button BrowseCards__Button"
             onClick={() =>
               handleFilterChange({
                 field: "page",
@@ -156,7 +156,7 @@ const BrowseCards = () => {
         )}
         {nextPage && (
           <button
-            className="App__Button"
+            className="App__Button BrowseCards__Button"
             onClick={() =>
               handleFilterChange({ field: "page", value: nextPage.toString() })
             }

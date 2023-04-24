@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../hooks/useUser";
 import {
   updateUserEmail,
@@ -16,6 +17,8 @@ const EditPofile = () => {
   const [userPassword, setUserPassword] = useState<string>("");
   const [userConfirmPassword, setUserConfirmPassword] = useState<string>("");
   // userEmail, setUserEmail] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const udpateUserName = async () => {
     if (!user) return;
@@ -45,7 +48,16 @@ const EditPofile = () => {
   ) : (
     <div className="EditProfile__formcontainer">
       <div className="EditProfile__form">
-        <div>
+        <button
+          className="App__Button EditProfile__top_button"
+          onClick={() => navigate("/profile")}
+        >
+          Back
+        </button>
+        <h1 className="EditProfile__title EditProfile__bordergradientbottom">
+          Edit Profile
+        </h1>
+        <div className="EditProfile__edit_item">
           <label htmlFor="name">Username</label>
           <br></br>
           <span>
@@ -69,7 +81,7 @@ const EditPofile = () => {
             Save
           </button>
         </div>
-        <div>
+        <div className="EditProfile__edit_item">
           <label htmlFor="name">Email</label>
           <br></br>
           <span>
@@ -93,11 +105,11 @@ const EditPofile = () => {
             Save
           </button>
         </div>
-        <div>
+        <div className="EditProfile__edit_item">
           <label htmlFor="name">Password</label>
           <br></br>
           <span>
-            <div>
+            <div className="EditProfile__edit_item">
               <input
                 type="password"
                 name="name"
@@ -112,7 +124,7 @@ const EditPofile = () => {
             </div>
             <label htmlFor="name">Confirm Password</label>
             <br></br>
-            <div>
+            <div className="EditProfile__edit_item">
               <input
                 type="password"
                 name="name"

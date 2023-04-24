@@ -105,70 +105,86 @@ const Profile = () => {
           </button>
         </div>
       </Modal>
-      <h1>Profile</h1>{" "}
-      {!id && user && user.id === profile?.id && profile?.role !== "ADMIN" && (
-        <Link className="App__Button" to={`/profile/edit`}>
-          Edit
-        </Link>
-      )}
-      {id &&
-        user &&
-        user.role === Role.ADMIN &&
-        profile?.role === Role.USER && (
-          <button className="App__Button" onClick={makeAdmin}>
-            Make Admin
-          </button>
-        )}
-      {(user?.role === Role.ADMIN || !id) && (
-        <p>
-          <strong>Email:</strong> {profile?.email}
-        </p>
-      )}
-      <p>
-        <strong>Username:</strong> {profile?.username}
-      </p>
-      <p>
-        <strong>Role:</strong> {profile?.role}
-      </p>
-      <p>
-        <strong>Coins:</strong> {profile?.coins}{" "}
-        {user?.role === Role.ADMIN && (
-          <button
-            className={"Profile__addbutton"}
-            onClick={() => setIsModalOpen(true)}
-          >
-            +
-          </button>
-        )}
-      </p>
-      <p>
-        <strong>Joined:</strong>{" "}
-        {profile?.createdAt && new Date(profile?.createdAt).toDateString()}
-      </p>
-      <p>
-        <strong>Followers:</strong> {profile?.followerCount}
-      </p>
-      <p>
-        <strong>Following:</strong> {profile?.followingCount}
-      </p>
-      {user && (
-        <div>
+      <div className="Profile__container">
+        <div className="Profile__outline">
+          {!id && user && user.id === profile?.id && (
+            <Link
+              className="Profile__top_button App__Button"
+              to={`/profile/edit`}
+            >
+              Edit
+            </Link>
+          )}
           {id && user?.id !== id && (
-            <button className="App__Button" onClick={updateFollow}>
+            <button
+              className="Profile__top_button App__Button"
+              onClick={updateFollow}
+            >
               {isFollowing ? "Unfollow" : "Follow"}
             </button>
           )}
-          <Link className="App__Button" to={`/cards?ownerId=${profile?.id}`}>
-            View {profile?.id === user?.id ? "Your" : profile?.username + "'s"}{" "}
-            Cards
-          </Link>
-          {user?.id !== profile?.id && (
-            <Link className="App__Button" to={`/propose/${profile?.id}`}>
-              Propose Trade
-            </Link>
+          <div className="Profile__name">
+            <h1 className="Profile__name Profile__bordergradientbottom">
+              {id ? `${profile?.username}'s` : "Your"} Profile
+            </h1>
+          </div>
+
+          {id &&
+            user &&
+            user.role === Role.ADMIN &&
+            profile?.role === Role.USER && (
+              <button className="App__Button" onClick={makeAdmin}>
+                Make Admin
+              </button>
+            )}
+          {(user?.role === Role.ADMIN || !id) && (
+            <p>
+              <strong>Email:</strong> {profile?.email}
+            </p>
           )}
+          <p>
+            <strong>Username:</strong> {profile?.username}
+          </p>
+          <p>
+            <strong>Role:</strong> {profile?.role}
+          </p>
+          <p>
+            <strong>Coins:</strong> {profile?.coins}{" "}
+            {user?.role === Role.ADMIN && (
+              <button
+                className={"Profile__addbutton"}
+                onClick={() => setIsModalOpen(true)}
+              >
+                +
+              </button>
+            )}
+          </p>
+          <p>
+            <strong>Joined:</strong>{" "}
+            {profile?.createdAt && new Date(profile?.createdAt).toDateString()}
+          </p>
+          <p>
+            <strong>Followers:</strong> {profile?.followerCount}
+          </p>
+          <p>
+            <strong>Following:</strong> {profile?.followingCount}
+          </p>
         </div>
-      )}
+        {user && (
+          <div id="Profile__buttons">
+            <Link className="App__Button" to={`/cards?ownerId=${profile?.id}`}>
+              View{" "}
+              {profile?.id === user?.id ? "Your" : profile?.username + "'s"}{" "}
+              Cards
+            </Link>
+            {user?.id !== profile?.id && (
+              <Link className="App__Button" to={`/propose/${profile?.id}`}>
+                Propose Trade
+              </Link>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
