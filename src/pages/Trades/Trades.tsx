@@ -23,7 +23,6 @@ const Trades = () => {
   const getTrades = async () => {
     const data = await getPendingTrades();
     setPendingTrades(data);
-    pendingTrades && pendingTrades?.length > 0 && console.log(pendingTrades[0]);
   };
 
   useEffect(() => {
@@ -43,8 +42,8 @@ const Trades = () => {
           {pendingTrades
             ?.filter((t) => t.receiver.id === user?.id)
             .map((trade) => (
-              <div className={"Trades__Preview"}>
-                <TradePreviewFeed key={trade.id} {...trade} />
+              <div key={trade.id} className={"Trades__Preview"}>
+                <TradePreviewFeed {...trade} />
               </div>
             ))}
           {pendingTrades?.find((t) => t.senderId === user?.id) && (
@@ -53,8 +52,8 @@ const Trades = () => {
           {pendingTrades
             ?.filter((t) => t.sender.id === user?.id)
             .map((trade) => (
-              <div className={"Trades__Preview"}>
-                <TradePreviewFeed key={trade.id} {...trade} />
+              <div key={trade.id} className={"Trades__Preview"}>
+                <TradePreviewFeed {...trade} />
               </div>
             ))}
         </div>

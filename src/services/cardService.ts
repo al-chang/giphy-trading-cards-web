@@ -18,16 +18,6 @@ export const getCard = async (cardId: string) => {
 };
 
 export const updateCard = async (cardId: string, name: string) => {
-  console.log(`${CARD_URL}/${cardId}`);
-
-  /*
-const { data } = await api.put(`${PACK_URL}/${packId}`, {
-    name,
-    price,
-    tags,
-    coverGif,
-  });
-  */
   await api.put(`${CARD_URL}/${cardId}`, { name });
 };
 

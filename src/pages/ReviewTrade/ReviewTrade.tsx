@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   acceptTrade,
   getPendingTrade,
+  rejectTrade,
   TPendingTrade,
 } from "../../services/tradeService";
 import { getUserProfile } from "../../services/userService";
@@ -40,7 +41,7 @@ const ReviewTrade = () => {
       // TODO: some error message
       return;
     }
-    const response = await acceptTrade(id);
+    const response = await rejectTrade(id);
     setResponseMessage(response.message);
     navigate("/trades");
   };

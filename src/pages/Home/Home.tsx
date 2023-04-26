@@ -45,8 +45,8 @@ const Home = () => {
               );
             } else {
               return (
-                <div className="Home__Card">
-                  <TradePreviewFeed key={item.id} {...item} />
+                <div key={item.id} className="Home__Card">
+                  <TradePreviewFeed {...item} />
                 </div>
               );
             }

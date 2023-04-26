@@ -80,7 +80,7 @@ const Profile = () => {
       setIsFollowing(profile.isFollowing);
     };
     getUserData();
-  }, [id, user, profile, madeAdmin]);
+  }, [id, user, madeAdmin]);
 
   return (
     <div>

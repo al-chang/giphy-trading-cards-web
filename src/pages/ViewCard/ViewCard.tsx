@@ -34,8 +34,11 @@ const ViewCard = () => {
       setCard(data);
     };
     getCardData();
-    card && setCardName(card?.name);
-  }, [id, card]);
+  }, [id]);
+
+  useEffect(() => {
+    setCardName(card?.name || "");
+  }, [card]);
 
   const toggleEditing = () => {
     setEditing(!editing);
@@ -49,8 +52,6 @@ const ViewCard = () => {
       setCardName(newName);
     }
   };
-
-  useEffect(() => {}, [card?.name]);
 
   return (
     <div id="ViewCard__container">
